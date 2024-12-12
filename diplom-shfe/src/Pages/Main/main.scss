@@ -1,0 +1,31 @@
+$base-color-button: #16a6af;
+$base-color-button-hover: #d6b316;
+
+.main {
+  color: rgba(255, 255, 255, 0.87);
+
+  &__header-button {
+    button {
+      font-size: 0.8rem;
+      font-weight: 500;
+      font-family: inherit;
+      text-transform: uppercase;
+
+      border-radius: 3px;
+      border: none;
+
+      padding: 12px;
+
+      background-color: $base-color-button;
+    }
+
+    button:hover {
+      background-color: $base-color-button-hover;
+    }
+
+    button:focus,
+    button:focus-visible {
+      outline: 4px auto -webkit-focus-ring-color;
+    }
+  }
+}
