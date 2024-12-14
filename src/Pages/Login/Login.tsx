@@ -4,7 +4,8 @@ import { Header } from "../../components/Header";
 import { useAuth } from "../../hooks/useAuth";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
-import "./login.scss";
+import "../../styles/login.scss";
+import { ChangeBgImage } from "../../hooks/ChangeBgImage";
 
 export interface ILoginForm {
   email: string;
@@ -60,7 +61,7 @@ export const Login = () => {
       if (response.ok) {
         localStorage.setItem("isAuthenticated", "true");
         login();
-        setLoading(false)
+        setLoading(false);
         navigate("/movies/edit");
         console.log("Авторизация пройдена успешно!");
       } else {
@@ -72,66 +73,73 @@ export const Login = () => {
   };
 
   return (
-    <div className="login">
-      <Container fluid="xxl">
-        <Row className="login__header col-sm-12 col-md-9 col-lg-9 col-xl-9 mx-auto ">
-          <Col>
-            <div className="">
-              <Header />
-            </div>
-          </Col>
-        </Row>
-        <Row
-          fluid="xxl"
-          className="col-sm-12 col-md-7 col-lg-6 col-xl-5  mx-auto"
-        >
-          <Col className="p-0">
-            <div className="login__title p-3">Авторизация</div>
-            <Form
-              className="login__form p-3"
-              autoComplete="off"
-              onSubmit={handleSubmit}
-            >
-              <Form.Group
-                className="login__input email mb-3 col-6"
-                controlId="formBasicEmail"
+    <ChangeBgImage>
+      <div className="login">
+        <Container fluid="xxl">
+          <Row className="login__header col-sm-12 col-md-9 col-lg-9 col-xl-9 mx-auto ">
+            <Col>
+              <div className="">
+                <Header />
+              </div>
+            </Col>
+          </Row>
+          <Row
+            fluid="xxl"
+            className="col-sm-12 col-md-8 col-lg-6 col-xl-5  mx-auto"
+          >
+            <Col className="p-0">
+              <div className="login__title p-3">Авторизация</div>
+              <Form
+                className="login__form p-3"
+                autoComplete="off"
+                onSubmit={handleSubmit}
               >
-                <Form.Label className="mb-1">E-mail</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="shfe-diplom@netology.ru"
-                  name="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
+                <Form.Group
+                  className="login__input email mb-2 col-6"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label className="mb-0">E-mail</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="shfe-diplom@netology.ru"
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
 
-              <Form.Group
-                className="login__input password mb-3 col-6"
-                controlId="formBasicPassword"
-              >
-                <Form.Label className="mb-1">Пароль</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="shfe-diplom"
-                  name="password"
-                  value={form.password}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-              {error && (
-                <p style={{ color: "red", fontWeight: "600" }}>{error}</p>
-              )}
-              <Button variant="secondary" type="submit" disabled={disabled}>
-                {isLoading ? "Loading…" : "Авторизоваться"}
-              </Button>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+                <Form.Group
+                  className="login__input password mb-3 col-6"
+                  controlId="formBasicPassword"
+                >
+                  <Form.Label className="mb-0">Пароль</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="shfe-diplom"
+                    name="password"
+                    value={form.password}
+                    onChange={handleChange}
+                    required
+                  />
+                </Form.Group>
+                {error && (
+                  <p style={{ color: "red", fontWeight: "600" }}>{error}</p>
+                )}
+                <Button
+                  className="mb-3"
+                  variant="secondary"
+                  type="submit"
+                  disabled={disabled}
+                >
+                  {isLoading ? "Загрузка…" : "Авторизоваться"}
+                </Button>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+    </ChangeBgImage>
   );
 };
 

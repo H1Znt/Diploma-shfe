@@ -1,0 +1,26 @@
+:root {
+  --base-color-button: #16a6af;
+  --base-color-button-hover: #d6b316;
+  --base-color-admin-top: #63536c;
+  --base-color-admin-body: #eae9ebf2;
+  --base-color-admin-label: #848484;
+  --base-color-admin-input: #757575;
+  --base-color-text: rgba(255, 255, 255, 0.87);
+  --color-grey-alt: #F1EBE6F2;
+
+  --border-admin-input: 1px solid var( --base-color-admin-top);
+  --border-radius: 3px;
+  --border-radius-small: 2px;
+  --border-radius-large: 4px;
+
+  --shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.24);  
+
+  --font-family-base: "Roboto", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  transition: 0.3s 0.1s;
+}

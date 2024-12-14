@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import "./header.scss";
+import "../../styles/header.scss";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -15,25 +15,26 @@ export const Header = () => {
 
   return (
     <header className="header">
-      <div>
-        {(isTransferred && (
+      {(isTransferred && (
+        <div className="header__title" onClick={handleClose}>
+          <div className="">
+            <span>
+              ИДЁМ<span className="header__title-letter">В</span>КИНО
+            </span>
+          </div>
+
+          <div className="header__title-administrate">
+            <span>Администраторррская</span>
+          </div>
+        </div>
+      )) ||
+        (!isTransferred && (
           <div className="header__title" onClick={handleClose}>
             <span>
               ИДЁМ<span className="header__title-letter">В</span>КИНО
             </span>
-            <span className="header__title-administrate">
-              Администраторррская
-            </span>
           </div>
-        )) ||
-          (!isTransferred && (
-            <div className="header__title" onClick={handleClose}>
-              <span>
-              ИДЁМ<span className="header__title-letter">В</span>КИНО
-              </span>
-            </div>
-          ))}
-      </div>
+        ))}
     </header>
   );
 };
