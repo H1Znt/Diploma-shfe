@@ -1,5 +1,5 @@
 import { Header } from "../../components/Header";
-import { ChangeBgImage } from "../../hooks/ChangeBgImage";
+import { ChangeBgImage } from "../../components/ChangeBgImage/ChangeBgImage";
 
 export const EditMovie = () => {
   return (

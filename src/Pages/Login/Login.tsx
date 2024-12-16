@@ -1,18 +1,18 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/Header";
-import { useAuth } from "../../hooks/useAuth";
 import { Button, Col, Container, Row } from "react-bootstrap";
+import { useAuth } from "../../hooks/useAuth";
+import { ChangeBgImage } from "../../components/ChangeBgImage/ChangeBgImage";
 import Form from "react-bootstrap/Form";
-import "../../styles/login.scss";
-import { ChangeBgImage } from "../../hooks/ChangeBgImage";
+import "../../styles/_login.scss";
 
 export interface ILoginForm {
   email: string;
   password: string;
 }
 
-export const Login = () => {
+export const Login: React.FC = () => {
   const [form, setForm] = useState<ILoginForm>({
     email: "",
     password: "",

@@ -21,6 +21,7 @@ function App() {
             <Route path="/*" element={<Navigate replace to="/" />} />
             <Route path="/" element={<Main />} />
             {/* <Route path="/movies/new" element={<AddMovie />} /> */}
+            {/* <Route path="/movies/:id" element={<MovieView />} /> */}
             <Route
               path="/movies/new"
               element={
@@ -37,7 +38,6 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            {/* <Route path="/movies/:id" element={<MovieView />} /> */}
             <Route path="/login" element={<Login />} />
         </Routes>
       </Router>

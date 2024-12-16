@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
-import "../../styles/header.scss";
+import "../../styles/_header.scss";
 
 export const Header = () => {
   const navigate = useNavigate();
