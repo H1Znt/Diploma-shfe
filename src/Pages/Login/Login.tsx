@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { Button, Col, Container, Row } from "react-bootstrap";
@@ -20,11 +20,16 @@ export const Login: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [disabled, setDisabled] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, logout } = useAuth();
 
   // const adminEmail = "shfe-diplom@netology.ru";
   // const adminPassword = "shfe-diplom"
   const navigate = useNavigate();
+
+  useEffect (() => {
+    logout()
+  }, [logout])
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -59,7 +64,6 @@ export const Login: React.FC = () => {
       });
 
       if (response.ok) {
-        localStorage.setItem("isAuthenticated", "true");
         login();
         setLoading(false);
         navigate("/movies/edit");

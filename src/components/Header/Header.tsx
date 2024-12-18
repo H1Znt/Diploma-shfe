@@ -4,12 +4,11 @@ import "../../styles/_header.scss";
 
 export const Header = () => {
   const navigate = useNavigate();
-  const { isTransferred, transferOut } = useAuth();
+  const { isTransferred, transferOut, logout } = useAuth();
 
   const handleClose = () => {
-    localStorage.setItem("isAuthenticated", "false");
-    localStorage.setItem("isTransferred", "false");
     transferOut();
+    logout();
     navigate("/");
   };
 

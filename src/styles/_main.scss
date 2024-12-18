@@ -1,11 +1,16 @@
-$desktop-above: 1281px;
-$desktop: 1280px;
-$tablet-above: 1024px;
-$tablet: 1023px;
-$mobile-above: 768px;
-$mobile: 767px;
-$mobile-md: 576px;
-$mobile-sm: 390px;
+$desktop: 1600px;
+$tablet: 768px;
+$mobile: 390px;
+$width-navDate: 125px;
+$width-navDate-md: 97px;
+$width-navDate-sm-min: 50px;
+$width-navDate-sm-max: 66px;
+$width-navDate-active: 241px;
+$width-navDate-active-md: 187px;
+$width-navDate-active-sm-min: 59px;
+$width-navDate-active-sm-max: 75px;
+$height-navDate: 48px;
+$height-navDate-active: 52px;
 
 @mixin hover {
   @media (hover: hover) {
@@ -21,140 +26,11 @@ $mobile-sm: 390px;
   }
 }
 
-@mixin desktop {
-  @media (min-width: $tablet-above) and (max-width: $desktop) {
-    @content;
-  }
-}
-
-@mixin tablet {
-  @media (min-width: $tablet-above) and (max-width: $tablet) {
-    @content;
-  }
-}
-
-@mixin mobile {
-  @media (min-width: $mobile-above) and (max-width: $mobile) {
-    @content;
-  }
-}
-
-@mixin mobile-md {
-  @media (min-width: $mobile-above) and (max-width: $mobile-md) {
-    @content;
-  }
-}
-
-@mixin mobile-sm {
-  @media (min-width: $mobile-above) and (max-width: $mobile-sm) {
-    @content;
-  }
-}
-
 .main {
   color: var(--base-color-text);
-  max-width: 990px !important;
+  max-width: 61.85rem !important;
   min-height: 1183px;
   position: relative;
-
-  @include desktop {
-    .main {
-      &__nav-date {
-        width: 125px;
-
-        &-active {
-          width: 241px;
-          height: 52px;
-        }
-      }
-
-      &__nav-date-button {
-        width: 125px;
-      }
-    }
-  }
-
-  @include tablet {
-    .main {
-      max-width: 768px !important;
-
-      &__nav-date {
-        width: 97px;
-
-        &-active {
-          width: 187px;
-          height: 52px;
-        }
-      }
-
-      &__nav-date-button {
-        width: 97px;
-      }
-    }
-  }
-
-  @include mobile {
-    .main {
-      max-width: 390px !important;
-
-      &__nav-date {
-        max-width: 66px;
-        min-width: 50px;
-
-        &-active {
-          max-width: 75px;
-          min-width: 55px;
-          height: 52px;
-        }
-      }
-
-      &__nav-date-button {
-        width: 50px;
-      }
-    }
-  }
-
-  @include mobile-md {
-    .main {
-      max-width: 390px !important;
-
-      &__nav-date {
-        max-width: 66px;
-        min-width: 50px;
-
-        &-active {
-          max-width: 75px;
-          min-width: 55px;
-          height: 52px;
-        }
-      }
-
-      &__nav-date-button {
-        width: 50px;
-      }
-    }
-  }
-
-  @include mobile-sm {
-    .main {
-      max-width: 390px !important;
-
-      &__nav-date {
-        max-width: 66px;
-        min-width: 50px;
-
-        &-active {
-          max-width: 75px;
-          min-width: 55px;
-          height: 52px;
-        }
-      }
-
-      &__nav-date-button {
-        width: 50px;
-      }
-    }
-  }
 
   &__header {
     padding: 14px;
@@ -191,18 +67,24 @@ $mobile-sm: 390px;
   }
 
   &__nav-date {
+    box-sizing: content-box;
     font-size: 0.75rem;
     font-weight: 400;
     line-height: 0.875rem;
     text-transform: capitalize;
     white-space: nowrap;
 
-    width: 125px;
+    width: $width-navDate;
+    max-height: $height-navDate;
 
-    height: 48px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    
+    margin-right: 1px;
 
     overflow: hidden;
-    margin-right: 1px;
     border-radius: var(--border-radius-small);
 
     cursor: pointer;
@@ -215,11 +97,14 @@ $mobile-sm: 390px;
     &-active {
       font-size: 0.9375rem;
       font-weight: 700;
-      line-height: 0.875rem;
+      line-height: 0.975rem;
 
-      width: 241px;
-      height: 52px;
+      width: $width-navDate-active;
+      height: $height-navDate-active;
       transition: width 0.3s ease-in;
+
+      padding-top: 10px;
+      padding-left: 10px;
 
       text-transform: capitalize;
 
@@ -239,7 +124,73 @@ $mobile-sm: 390px;
     background-color: var(--color-grey-alt);
     border-radius: var(--border-radius-small);
 
-    width: 125px;
-    height: 48px;
+    width: $width-navDate;
+    height: $height-navDate;
   }
 }
+
+// @media (max-width: $desktop) {
+//   .main {
+//     max-width: 61.85rem;
+
+//     &__nav-date {
+//       width: $width-navDate;
+//       height: $height-navDate;
+
+//       &-active {
+//         width: $width-navDate-active;
+//         height: $height-navDate-active;
+//       }
+//     }
+
+//     &__nav-date-button {
+//       width: $width-navDate;
+//       height: $height-navDate;
+//     }
+//   }
+// }
+
+// @media (max-width: $tablet) {
+//   .main {
+//     background-color: pink;
+//     max-width: $tablet !important;
+
+//     &__nav-date {
+//       width: $width-navDate-md;
+
+//       &-active {
+//         width: $width-navDate-active-md;
+//       }
+//     }
+
+//     &__nav-date-button {
+//       width: $width-navDate-md;
+//     }
+//   }
+// }
+
+// @media (max-width: $mobile) {
+//   .main {
+//     background-color: red;
+//     max-width: $mobile !important;
+
+//     &__nav-date {
+//       width: $width-navDate-sm-max;
+//       // min-width: $width-navDate-sm-min;
+//       padding-top: 10px;
+//       padding-left: 10px;
+
+//       &-active {
+//         max-width: $width-navDate-active-sm-max;
+//         // min-width: $width-navDate-active-sm-min;
+//         padding-top: 10px;
+//         padding-left: 10px;
+//       }
+//     }
+
+//     &__nav-date-button {
+//       width: $width-navDate-sm-max;
+//       // min-width: $width-navDate-sm-min;
+//     }
+//   }
+// }

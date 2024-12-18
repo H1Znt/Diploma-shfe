@@ -14,13 +14,15 @@ export const Main: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [films, setFilms] = useState<IFilm[]>([]);
   const [halls, setHalls] = useState<IHall[]>([]);
-  const [seances, setSeances] = useState<ISeance []>([]);
+  const [seances, setSeances] = useState<ISeance[]>([]);
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { transferIn } = useAuth();
+  const { transferIn, transferOut, logout } = useAuth();
 
   useEffect(() => {
+    transferOut();
+    logout();
     // Генерация дат (7 дней начиная с текущей)
     const today = new Date();
     const generatedDates = Array.from({ length: 7 }, (_, i) => {
@@ -34,7 +36,7 @@ export const Main: React.FC = () => {
     const todayString = today.toISOString().split("T")[0];
     setSelectedDate(todayString);
     fetchMovies();
-  }, []);
+  }, [transferOut, logout]);
 
   const fetchMovies = async () => {
     setLoading(true);
@@ -73,7 +75,6 @@ export const Main: React.FC = () => {
   };
 
   const handleLogin = () => {
-    localStorage.setItem("isTransferred", "true");
     transferIn();
     navigate("/login");
   };
@@ -104,7 +105,7 @@ export const Main: React.FC = () => {
             return (
               <div
                 key={dateString}
-                className={`p-2 align-content-center ${changeSize}`}
+                className={`md="auto" ${changeSize}`}
                 onClick={() => handleDateClick(date)}
                 style={{
                   color: isWeekend ? "red" : "black", // Выделение выходных красным цветом
@@ -127,17 +128,20 @@ export const Main: React.FC = () => {
               </div>
             );
           })}
-          <button className="main__nav-date-button" onClick={handleNextDate}>
+          <button
+            className={`md="auto" main__nav-date-button`}
+            onClick={handleNextDate}
+          >
             {">"}
           </button>
         </Stack>
         <Stack>
           {loading ? (
-            <div style={{ marginTop: "20px" }}>Загрузка...</div>
+            <div style={{ marginTop: "40px" }}>Загрузка...</div>
           ) : (
-            <div style={{ marginTop: "20px" }}>
+            <div style={{ marginTop: "40px" }}>
               {films.length > 0 ? (
-                <Movie films={films} halls={halls} seances={seances}/>
+                <Movie films={films} halls={halls} seances={seances} />
               ) : (
                 <div>Фильмы не найдены</div>
               )}

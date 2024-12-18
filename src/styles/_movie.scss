@@ -1,0 +1,9 @@
+.movie {
+
+  &__container {
+    background-color: var(--color-grey-alt);
+    margin-bottom: 20px;
+    border-radius: var(--border-radius-small);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
