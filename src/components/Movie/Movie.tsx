@@ -17,27 +17,25 @@ export const Movie: React.FC<IMovie> = ({ films, halls, seances }) => {
   return (
     <div className="movie">
       {films.map((film) => (
-        <div
-          className="movie__container p-3"
-          key={film.id}
-        >
-          <div className="" style={{ display: "flex", gap: "20px" }}>
+        <div className="movie__container p-3" key={film.id}>
+          <div className="movie__content">
             <img
               src={film.film_poster}
               alt={film.film_name}
-              style={{ width: "120px", borderRadius: "8px", height: "100%" }}
+              className="movie__picture"
             />
-            <div>
-              <h3 style={{ margin: "0 0 10px" }}>{film.film_name}</h3>
-              <p style={{ margin: "0 0 5px", color: "#666" }}>
-                {film.film_duration} минут, {film.film_origin}
+            <div className="movie__picture-figure"></div>
+            <div className="movie__tittle">
+              <h3 className="movie__tittle-heading">{film.film_name}</h3>
+              <p className="movie__tittle-description">
+                {film.film_description.slice(0, 210)}...
               </p>
-              <p style={{ margin: "0", color: "#888" }}>
-                {film.film_description}
+              <p className="movie__tittle-movie-time">
+                {film.film_duration} минут, {film.film_origin}
               </p>
             </div>
           </div>
-          <div style={{ marginTop: "20px" }}>
+          <div className="movie__halls">
             {halls.map((hall) => {
               const hallSeances = seances.filter(
                 (seance) =>
@@ -46,24 +44,16 @@ export const Movie: React.FC<IMovie> = ({ films, halls, seances }) => {
               );
               if (hallSeances.length === 0) return null;
               return (
-                <div key={hall.id} style={{ marginBottom: "10px" }}>
-                  <h4 style={{ margin: "0 0 10px", color: "black" }}>
+                <div key={hall.id} className="movie__halls-tittle">
+                  <h4 className="movie__halls-tittle-heading">
                     Зал: {hall.hall_name}
                   </h4>
-                  <div
-                    style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}
-                  >
+                  <div className="movie__halls-seance">
                     {hallSeances.map((seance) => (
                       <button
                         key={seance.id}
                         onClick={() => handleSeanceClick(seance.id)}
-                        style={{
-                          padding: "5px 10px",
-                          backgroundColor: "#f4f4f4",
-                          border: "1px solid #ddd",
-                          borderRadius: "5px",
-                          cursor: "pointer",
-                        }}
+                        className="movie__halls-seance-time"
                       >
                         {seance.seance_time}
                       </button>
