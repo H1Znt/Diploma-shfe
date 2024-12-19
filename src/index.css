@@ -16,6 +16,9 @@
   --shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.24);  
 
   --font-family-base: "Roboto", sans-serif;
+
+  --max-width-login-form: 480px;
+  --max-height-login-form: 294px;
 }
 
 * {

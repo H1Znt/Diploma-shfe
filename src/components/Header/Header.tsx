@@ -15,14 +15,14 @@ export const Header = () => {
   return (
     <header className="header">
       {(isTransferred && (
-        <div className="header__title" onClick={handleClose}>
-          <div className="">
-            <span>
+        <div className="header__title" >
+          <div>
+            <span onClick={handleClose}>
               ИДЁМ<span className="header__title-letter">В</span>КИНО
             </span>
           </div>
 
-          <div className="header__title-administrate">
+          <div className="header__title-administrate" onClick={handleClose}>
             <span>Администраторррская</span>
           </div>
         </div>

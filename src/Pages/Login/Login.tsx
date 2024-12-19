@@ -26,10 +26,9 @@ export const Login: React.FC = () => {
   // const adminPassword = "shfe-diplom"
   const navigate = useNavigate();
 
-  useEffect (() => {
-    logout()
-  }, [logout])
-
+  useEffect(() => {
+    logout();
+  }, [logout]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -79,18 +78,15 @@ export const Login: React.FC = () => {
   return (
     <ChangeBgImage>
       <div className="login">
-        <Container fluid="xxl">
-          <Row className="login__header col-sm-12 col-md-9 col-lg-9 col-xl-9 mx-auto ">
+        <Container className="p-0 login__container">
+          <Row className="login__header mx-auto">
             <Col>
               <div className="">
                 <Header />
               </div>
             </Col>
           </Row>
-          <Row
-            fluid="xxl"
-            className="col-sm-12 col-md-8 col-lg-6 col-xl-5  mx-auto"
-          >
+          <Row className="login__container-form  mx-auto">
             <Col className="p-0">
               <div className="login__title p-3">Авторизация</div>
               <Form
@@ -99,7 +95,7 @@ export const Login: React.FC = () => {
                 onSubmit={handleSubmit}
               >
                 <Form.Group
-                  className="login__input email mb-2 col-6"
+                  className="login__input email mb-2"
                   controlId="formBasicEmail"
                 >
                   <Form.Label className="mb-0">E-mail</Form.Label>
@@ -114,7 +110,7 @@ export const Login: React.FC = () => {
                 </Form.Group>
 
                 <Form.Group
-                  className="login__input password mb-3 col-6"
+                  className="login__input password mb-3"
                   controlId="formBasicPassword"
                 >
                   <Form.Label className="mb-0">Пароль</Form.Label>
