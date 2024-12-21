@@ -92,16 +92,21 @@ export const MovieSeance: React.FC = () => {
       </ChangeBgImage>
     );
   }
-  
+
   const seatConfig = hall.hall_config;
 
   const handleSeatClick = (row: number, col: number) => {
-    const isSelected = selectedSeats.some(([r, c]) => r === row && c === col);
+    const rowIndex = row + 1; // Переносим нумерацию на 1
+    const colIndex = col + 1; // Переносим нумерацию на 1
+
+    const isSelected = selectedSeats.some(
+      ([r, c]) => r === rowIndex && c === colIndex
+    );
 
     setSelectedSeats((prev) =>
       isSelected
-        ? prev.filter(([r, c]) => r !== row || c !== col)
-        : [...prev, [row, col]]
+        ? prev.filter(([r, c]) => r !== rowIndex || c !== colIndex)
+        : [...prev, [rowIndex, colIndex]]
     );
   };
 
@@ -113,7 +118,10 @@ export const MovieSeance: React.FC = () => {
         hallName: hall.hall_name,
         seanceTime: seance.seance_time,
         selectedSeats,
-        seatPrices: { standart: hall.hall_price_standart, vip: hall.hall_price_vip },
+        seatPrices: {
+          standart: hall.hall_price_standart,
+          vip: hall.hall_price_vip,
+        },
         selectedDate: selectedDate,
       },
     });
@@ -151,8 +159,11 @@ export const MovieSeance: React.FC = () => {
                   {seatConfig.map((row, rowIndex) => (
                     <div key={rowIndex} className="seance__seats-row">
                       {row.map((col, colIndex) => {
+                        const seatRow = rowIndex + 1; // Нумерация с 1
+                        const seatCol = colIndex + 1; // Нумерация с 1
+
                         const isSelected = selectedSeats.some(
-                          ([r, c]) => r === rowIndex && c === colIndex
+                          ([r, c]) => r === seatRow && c === seatCol
                         );
                         const isDisabled = col === "disabled";
                         const isVip = col === "vip";
@@ -205,7 +216,7 @@ export const MovieSeance: React.FC = () => {
 
           <div className="actions">
             <button
-            className=""
+              className=""
               onClick={handleBooking}
               disabled={selectedSeats.length === 0}
             >
