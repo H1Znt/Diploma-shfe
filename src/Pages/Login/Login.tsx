@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Header } from "../../components/Header";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { useAuth } from "../../hooks/useAuth";
@@ -20,15 +20,19 @@ export const Login: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [disabled, setDisabled] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const { login, logout } = useAuth();
+  const { login, logout, transferIn } = useAuth();
 
   // const adminEmail = "shfe-diplom@netology.ru";
   // const adminPassword = "shfe-diplom"
+  const location = useLocation();
   const navigate = useNavigate();
 
+  const from = location.state?.from?.pathname || "/movies/edit";
+
   useEffect(() => {
+    transferIn();
     logout();
-  }, [logout]);
+  }, [logout, transferIn]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -65,7 +69,7 @@ export const Login: React.FC = () => {
       if (response.ok) {
         login();
         setLoading(false);
-        navigate("/movies/edit");
+        navigate(from, { replace: true });
         console.log("Авторизация пройдена успешно!");
       } else {
         setError("Ошибка сервера. Попробуйте позже.");
