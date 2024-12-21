@@ -92,6 +92,7 @@ export const MovieSeance: React.FC = () => {
       </ChangeBgImage>
     );
   }
+  
   const seatConfig = hall.hall_config;
 
   const handleSeatClick = (row: number, col: number) => {
@@ -112,7 +113,7 @@ export const MovieSeance: React.FC = () => {
         hallName: hall.hall_name,
         seanceTime: seance.seance_time,
         selectedSeats,
-        seatPrices: { standart: 250, vip: 350 },
+        seatPrices: { standart: hall.hall_price_standart, vip: hall.hall_price_vip },
         selectedDate: selectedDate,
       },
     });
