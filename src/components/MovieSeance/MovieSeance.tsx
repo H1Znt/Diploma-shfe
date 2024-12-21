@@ -196,7 +196,7 @@ export const MovieSeance: React.FC = () => {
                   ))}
                 </div>
               </div>
-              <div className="legend d-flex flex-wrap justify-content-center">
+              <div className="legend d-flex justify-content-center">
                 <div className="gap">
                   <div className="legend-item">
                     <span className="box free"></span> Свободно (
