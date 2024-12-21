@@ -103,11 +103,16 @@ export const MovieSeance: React.FC = () => {
       ([r, c]) => r === rowIndex && c === colIndex
     );
 
-    setSelectedSeats((prev) =>
-      isSelected
+    setSelectedSeats((prev) => {
+      const updatedSeats = isSelected
         ? prev.filter(([r, c]) => r !== rowIndex || c !== colIndex)
-        : [...prev, [rowIndex, colIndex]]
-    );
+        : [...prev, [rowIndex, colIndex]];
+
+      // Сортировка мест по ряду и месту
+      return updatedSeats.sort(([r1, c1], [r2, c2]) =>
+        r1 === r2 ? c1 - c2 : r1 - r2
+      );
+    });
   };
 
   const handleBooking = () => {
