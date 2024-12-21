@@ -5,16 +5,18 @@
   --base-color-admin-body: #eae9ebf2;
   --base-color-admin-label: #848484;
   --base-color-admin-input: #757575;
-  --base-color-admin-input-border: #B7B7B7;
+  --base-color-admin-input-border: #b7b7b7;
   --base-color-text: rgba(255, 255, 255, 0.87);
-  --color-grey-alt: #F1EBE6F2;
+  --color-grey-alt: #f1ebe6f2;
+  --color-placeSeance: #8e8e8e;
+  --color-placeSeanceBusy: #171D24;
 
-  --border-admin-input: 1px solid var( --base-color-admin-top);
+  --border-admin-input: 1px solid var(--base-color-admin-top);
   --border-radius: 3px;
   --border-radius-small: 2px;
   --border-radius-large: 4px;
 
-  --shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.24);  
+  --shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.24);
 
   --font-family-base: "Roboto", sans-serif;
 

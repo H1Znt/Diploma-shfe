@@ -10,6 +10,7 @@ import { ProtectedRoute } from "./hooks/ProtectedRoute";
 import { EditMovie } from "./Pages/EditMovie";
 import { AuthProvider } from "./hooks/AuthProvider";
 import { AddMovie } from "./components/AddMovie";
+import { MovieSeance } from "./components/MovieSeance";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -20,7 +21,8 @@ function App() {
         <Routes>
           <Route path="/*" element={<Navigate replace to="/" />} />
           <Route path="/" element={<Main />} />
-          {/* <Route path="/movies/:id" element={<MovieView />} /> */}
+          <Route path="/movies/:seanceId" element={<MovieSeance />} />
+          {/* <Route path="/booking-summary" element={<BookingSummary />} /> */}
           <Route
             path="/movies/new"
             element={

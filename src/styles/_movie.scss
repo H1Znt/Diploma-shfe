@@ -8,14 +8,11 @@
   }
 
   &__content {
-    // style={{ display: "flex", gap: "20px" }}
     display: flex;
   }
 
   &__picture {
-    // style={{ width: "120px", borderRadius: "8px", height: "100%" }}
     width: 7.8125rem;
-    // height: 10.9375rem;
     height: 100%;
     margin-right: 1px;
     border-radius: var(--border-radius-small);
@@ -29,9 +26,8 @@
   }
 
   &__tittle {
+    
     &-heading {
-      // style={{ margin: "0 0 10px" }}
-      // margin: 0 0 10px;
       margin-left: 8px;
       margin-bottom: 10px;
 
@@ -41,7 +37,6 @@
     }
 
     &-description {
-      // style={{ margin: "0", color: "#888" }}
       font-size: 0.875rem;
       font-weight: 400;
       line-height: 1rem;
@@ -49,14 +44,10 @@
       margin-left: 8px;
       margin-bottom: 0;
       cursor: pointer;
-      // width: 200px;
-      // white-space: nowrap;
-      // overflow: hidden;
-      // text-overflow: ellipsis;
+
     }
 
     &-movie-time {
-      // style={{ margin: "0 0 5px", color: "#666" }}
       font-size: 0.875rem;
       font-weight: 300;
       line-height: 1rem;
@@ -82,18 +73,10 @@
   }
 
   &__halls-seance {
-    // style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}
     display: flex;
     flex-wrap: wrap;
 
     &-time {
-      // style={{
-      //   padding: "5px 10px",
-      //   backgroundColor: "#f4f4f4",
-      //   border: "1px solid #ddd",
-      //   borderRadius: "5px",
-      //   cursor: "pointer",
-      // }}
       cursor: pointer;
       padding: 5px 10px;
       margin-right: 3px;

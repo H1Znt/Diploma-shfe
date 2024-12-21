@@ -141,7 +141,7 @@ export const Main: React.FC = () => {
           ) : (
             <div style={{ marginTop: "40px" }}>
               {films.length > 0 ? (
-                <Movie films={films} halls={halls} seances={seances} />
+                <Movie films={films} halls={halls} seances={seances} selectedDate={selectedDate}/>
               ) : (
                 <div>Фильмы не найдены</div>
               )}

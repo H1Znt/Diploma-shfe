@@ -6,14 +6,20 @@ interface IMovie {
   films: IFilm[];
   halls: IHall[];
   seances: ISeance[];
+  selectedDate: string | null;
 }
 
-export const Movie: React.FC<IMovie> = ({ films, halls, seances }) => {
+export const Movie: React.FC<IMovie> = ({ films, halls, seances, selectedDate }) => {
   const navigate = useNavigate();
 
   const handleSeanceClick = (seanceId: number) => {
-    navigate(`/movies/${seanceId}`);
+    navigate(`/movies/${seanceId}`, {
+      state: {
+        selectedDate: selectedDate,
+      },
+    });
   };
+  
   return (
     <div className="movie">
       {films.map((film) => (
@@ -31,7 +37,7 @@ export const Movie: React.FC<IMovie> = ({ films, halls, seances }) => {
                 {film.film_description.slice(0, 210)}...
               </p>
               <p className="movie__tittle-movie-time">
-                {film.film_duration} минут, {film.film_origin}
+                {film.film_duration} минут {film.film_origin}
               </p>
             </div>
           </div>
@@ -40,7 +46,8 @@ export const Movie: React.FC<IMovie> = ({ films, halls, seances }) => {
               const hallSeances = seances.filter(
                 (seance) =>
                   seance.seance_filmid === film.id &&
-                  seance.seance_hallid === hall.id
+                  seance.seance_hallid === hall.id &&
+                  hall.hall_open === 1
               );
               if (hallSeances.length === 0) return null;
               return (

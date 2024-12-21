@@ -19,7 +19,7 @@ export interface IHall {
   hall_name: string; // Название кинозала
   hall_rows: number; // Кол-во рядов с зрительными местами в кинозале
   hall_places: number; // Кол-во зрительных мест в одном ряду
-  hall_config: string[]; // Конфигурация посадочных мест в кинозале
+  hall_config: string[][]; // Конфигурация посадочных мест в кинозале
   hall_price_standart: number; // Цена обычного билета
   hall_price_vip: number; // Цена ВИП билета
   hall_open: number; // Открыт ли кинозал для продажи билетов
