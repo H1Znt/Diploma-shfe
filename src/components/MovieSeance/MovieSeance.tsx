@@ -130,8 +130,8 @@ export const MovieSeance: React.FC = () => {
 
   const getSelectedSeatsString = () => {
     return selectedSeats
-      .map(([row, col]) => `Ряд ${row} Место ${col}`)
-      .join(", ");
+      .map(([row, col]) => `Ряд ${row}, Место ${col}`)
+      .join(" | ");
   };
 
   const handleBooking = () => {
@@ -142,17 +142,16 @@ export const MovieSeance: React.FC = () => {
     console.log(`Итоговая стоимость: ${totalPrice}`);
     console.log(`Выбранные места: ${selectedSeatsString}`);
 
-    navigate("/booking-summary", {
+    navigate("/booking-tickets", {
       state: {
+        seanceId: seanceId,
+        hall,
         filmName: film.film_name,
         hallName: hall.hall_name,
         seanceTime: seance.seance_time,
+        selectedSeats,
         selectedSeatsString,
         totalPrice,
-        seatPrices: {
-          standart: hall.hall_price_standart,
-          vip: hall.hall_price_vip,
-        },
         selectedDate: selectedDate,
       },
     });

@@ -11,6 +11,7 @@ import { EditMovie } from "./Pages/EditMovie";
 import { AuthProvider } from "./hooks/AuthProvider";
 import { AddMovie } from "./components/AddMovie";
 import { MovieSeance } from "./components/MovieSeance";
+import { BookingTickets } from "./components/BookingTickets";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -22,7 +23,7 @@ function App() {
           <Route path="/*" element={<Navigate replace to="/" />} />
           <Route path="/" element={<Main />} />
           <Route path="/movies/:seanceId" element={<MovieSeance />} />
-          {/* <Route path="/booking-summary" element={<BookingSummary />} /> */}
+          <Route path="/booking-tickets" element={<BookingTickets />} />
           <Route
             path="/movies/new"
             element={
