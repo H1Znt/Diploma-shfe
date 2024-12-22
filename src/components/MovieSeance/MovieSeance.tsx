@@ -235,7 +235,7 @@ export const MovieSeance: React.FC = () => {
                 </div>
                 <div className="gap">
                   <div className="legend-item">
-                    <span className="box reserved"></span> Занято
+                    <span className="box"></span> Занято
                   </div>
                   <div className="legend-item">
                     <span className="box selected"></span> Выбрано
