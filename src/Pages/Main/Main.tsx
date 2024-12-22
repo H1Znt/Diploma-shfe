@@ -46,7 +46,6 @@ export const Main: React.FC = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data.result.films);
           setFilms(data.result.films);
           setHalls(data.result.halls);
           setSeances(data.result.seances);

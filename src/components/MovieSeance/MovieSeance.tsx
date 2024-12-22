@@ -115,14 +115,40 @@ export const MovieSeance: React.FC = () => {
     });
   };
 
+  const calculateTotalPrice = () => {
+    return selectedSeats.reduce((total, [row, col]) => {
+      const seatType = hall?.hall_config[row - 1]?.[col - 1];
+      if (seatType === "vip") {
+        return total + hall.hall_price_vip;
+      }
+      if (seatType === "standart") {
+        return total + hall.hall_price_standart;
+      }
+      return total;
+    }, 0);
+  };
+
+  const getSelectedSeatsString = () => {
+    return selectedSeats
+      .map(([row, col]) => `Ряд ${row} Место ${col}`)
+      .join(", ");
+  };
+
   const handleBooking = () => {
+    const totalPrice = calculateTotalPrice();
+    const selectedSeatsString = getSelectedSeatsString();
+
     console.log(`Места: ${selectedSeats}`);
+    console.log(`Итоговая стоимость: ${totalPrice}`);
+    console.log(`Выбранные места: ${selectedSeatsString}`);
+
     navigate("/booking-summary", {
       state: {
         filmName: film.film_name,
         hallName: hall.hall_name,
         seanceTime: seance.seance_time,
-        selectedSeats,
+        selectedSeatsString,
+        totalPrice,
         seatPrices: {
           standart: hall.hall_price_standart,
           vip: hall.hall_price_vip,
