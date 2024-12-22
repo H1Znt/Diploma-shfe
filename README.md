@@ -1,4 +1,4 @@
-# React + TypeScript + Vite
+# React + TypeScript + Vite + React-bootstrap + Bootstrap
 
 # Diplom-shfe
 
