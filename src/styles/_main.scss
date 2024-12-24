@@ -126,7 +126,6 @@ $height-navDate-active: 52px;
 
 @media (max-width: $tablet) {
   .main {
-    background-color: pink;
     max-width: $tablet !important;
 
     &__nav-date {
@@ -146,7 +145,6 @@ $height-navDate-active: 52px;
 
 @media (max-width: $mobile) {
   .main {
-    background-color: red;
     max-width: $mobile !important;
 
     &__nav-date {
