@@ -22,8 +22,8 @@ export const Login: React.FC = () => {
   const [isLoading, setLoading] = useState(false);
   const { login, logout, transferIn } = useAuth();
 
-  // const adminEmail = "shfe-diplom@netology.ru";
-  // const adminPassword = "shfe-diplom"
+  const adminEmail = "shfe-diplom@netology.ru";
+  const adminPassword = "shfe-diplom"
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -43,27 +43,25 @@ export const Login: React.FC = () => {
     e.preventDefault();
 
     if (
-      form.email !== "1@1" ||
-      form.password !== "1"
-      // form.email !== adminEmail ||
-      // form.password !== adminPassword
+      // form.email !== "1@1" ||
+      // form.password !== "1"
+      form.email !== adminEmail ||
+      form.password !== adminPassword
     ) {
       setError("Неверный email или пароль");
       return;
     }
+
+    const params = new FormData();
+    params.set("login", form.email);
+    params.set("password", form.password)
 
     try {
       setLoading(true);
       setDisabled(true);
       const response = await fetch("https://shfe-diplom.neto-server.ru/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          login: form.email,
-          password: form.password,
-        }),
+        body: params,
       });
 
       if (response.ok) {
