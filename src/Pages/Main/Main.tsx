@@ -25,7 +25,7 @@ export const Main: React.FC = () => {
     logout();
     // Генерация дат (7 дней начиная с текущей)
     const today = new Date();
-    const generatedDates = Array.from({ length: 7 }, (_, i) => {
+    const generatedDates = Array.from({ length: 6 }, (_, i) => {
       const date = new Date();
       date.setDate(today.getDate() + i);
       return date;
@@ -46,7 +46,17 @@ export const Main: React.FC = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          setFilms(data.result.films);
+          const filteredFilms = data.result.films.filter((film: IFilm) => {
+            return data.result.seances.some(
+              (seance: ISeance) =>
+                seance.seance_filmid === film.id &&
+                data.result.halls.some(
+                  (hall: IHall) => hall.id === seance.seance_hallid && hall.hall_open === 1
+                )
+            );
+          });
+
+          setFilms(filteredFilms);
           setHalls(data.result.halls);
           setSeances(data.result.seances);
         });
@@ -140,7 +150,7 @@ export const Main: React.FC = () => {
           ) : (
             <div style={{ marginTop: "40px" }}>
               {films.length > 0 ? (
-                <Movie films={films} halls={halls} seances={seances} selectedDate={selectedDate}/>
+                <Movie films={films} halls={halls} seances={seances} selectedDate={selectedDate} />
               ) : (
                 <div>Фильмы не найдены</div>
               )}
@@ -151,76 +161,3 @@ export const Main: React.FC = () => {
     </ChangeBgImage>
   );
 };
-
-{
-  /* <div style={{ marginTop: "20px" }}>
-{movies.length > 0 ? (
-  movies.map((movie) => <Movie key={movie.id} movie={movie} hall={hall} />)
-) : (
-  <div>Фильмы не найдены</div>
-)}
-</div> */
-}
-
-/* <Movie key={movie.id} movie={movie}  /> */
-// p-0 col-sm-12 col-md-7 col-lg-7 col-xl-7
-// <div className="main">
-//   <div className="main__header">
-//     <Header />
-//     <div className="main__header-button">
-//       <Button variant="primary" onClick={handleLogin}>
-//         Войти
-//       </Button>
-//       <button onClick={handleLogin}>Войти</button>
-//     </div>
-//   </div>
-// </div>
-
-// <Container fluid className="p-0">
-//           <Row className="main__container-nav-date flex-nowrap">
-//             {dates.map((date, index) => {
-//               const dateString = date.toISOString().split("T")[0];
-//               const isSelected = dateString === selectedDate;
-//               const isWeekend = date.getDay() === 0 || date.getDay() === 6; // Проверка на выходные
-
-//               const changeSize = isSelected
-//                 ? "main__nav-date-active"
-//                 : "main__nav-date";
-
-//               return (
-//                 <Col key={dateString} className="p-0">
-//                   <div
-//                     className={`p-2 align-content-center ${changeSize}`}
-//                     onClick={() => handleDateClick(date)}
-//                     style={{
-//                       color: isWeekend ? "red" : "black", // Выделение выходных красным цветом
-//                     }}
-//                   >
-//                     <div>
-//                       {index === 0
-//                         ? "Сегодня"
-//                         : `${date.toLocaleDateString("ru-RU", {
-//                             weekday: "short",
-//                           })},`}
-//                     </div>
-//                     <div>
-//                       {index === 0
-//                         ? `${date.toLocaleDateString("ru-RU", {
-//                             weekday: "short",
-//                           })}, ${date.getDate()}`
-//                         : `${date.getDate()}`}
-//                     </div>
-//                   </div>
-//                 </Col>
-//               );
-//             })}
-//             <Col className="p-0">
-//               <button
-//                 className="w-100 main__nav-date-button"
-//                 onClick={handleNextDate}
-//               >
-//                 {">"}
-//               </button>
-//             </Col>
-//           </Row>
-//         </Container>

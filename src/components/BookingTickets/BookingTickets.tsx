@@ -65,13 +65,10 @@ export const BookingTickets: React.FC = () => {
       };
     });
 
-    const bodyTicket = {
-      seanceId: Number(seanceId),
-      ticketDate: selectedDate,
-      tickets: tickets,
-    };
-
-    console.log("Body:", JSON.stringify(bodyTicket));
+    const params = new FormData()
+    params.set("seanceId", String(seanceId));
+    params.set("ticketDate", selectedDate);
+    params.set("tickets", JSON.stringify(tickets))
 
     try {
       setLoading(true);
@@ -79,21 +76,17 @@ export const BookingTickets: React.FC = () => {
         "https://shfe-diplom.neto-server.ru/ticket",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(bodyTicket),
+          body: params,
         }
       );
 
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Ошибка сервера:", errorText);
         throw new Error(`Ошибка сервера: ${response.status}`);
       }
 
       const result = await response.json();
       setQrData(result);
+      setLoading(false);
       console.log("Билеты успешно забронированы:", result);
     } catch (error) {
       console.error("Ошибка бронирования:", error);
@@ -111,10 +104,11 @@ export const BookingTickets: React.FC = () => {
         <Stack className="booking-tickets">
           {(!isTicketGenerated && (
             <div>
-              <div className="booking-tickets__tittle">
+              <div className="booking-tickets__tittle tickets-decorator">
                 <h1>Вы выбрали билеты:</h1>
               </div>
-              <div className="booking-tickets__details-container">
+              <div className="tickets__separator"></div>
+              <div className="booking-tickets__details-container  tickets-decorator">
                 <div className="booking-tickets__details">
                   <p className="mb-2">
                     На фильм: <span>{filmName}</span>
@@ -148,7 +142,7 @@ export const BookingTickets: React.FC = () => {
           )) ||
             (isTicketGenerated && (
               <div>
-                <div className="booking-tickets__tittle">
+                <div className="booking-tickets__tittle tickets-decorator">
                   <h1>Вы выбрали билеты:</h1>
                 </div>
                 <div className="booking-tickets__details-container">

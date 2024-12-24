@@ -1,33 +1,55 @@
+.tickets-decorator {
+  position: relative;
+  padding: 0;
+  border: none;
+
+  :before {
+    content: "";
+    background: url(/img/__before.png);
+    background-size: 10px 4px;
+    background-repeat: repeat-x;
+    width: 100%;
+    // width: 990px;
+    height: 3px;
+    position: absolute;
+    top: -3px;
+    left: 0;
+    pointer-events: none;
+  }
+
+  :after {
+    content: "";
+    background: url(/img/__after.png);
+    background-size: 10px 3px;
+    background-repeat: repeat-x;
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    pointer-events: none;
+  }
+}
+
+.tickets__separator {
+  height: 6px;
+  width: 100%;
+}
+
 .booking-tickets__container {
   max-width: 990px !important;
   height: 100vh;
+  
 }
 
 .booking-tickets {
-  position: relative;
-  background: var(--color-grey-alt);
   color: #000;
-
-  // border-style: solid;
-  // border-image-width: 10px;
-  // border-image-source: url("../../img/__after.png");
-  // border-image-slice: 30;
-  // border-image-repeat: round;
-
-  // &::before {
-  //   content: "";
-  //   // border-image-width: 10px;
-  //   // width: 100%;
-  //   // height: 3px;
-  //   // border-image-repeat: round;
-  //   background-clip: padding-box;
-  //   border-image-source: url("../../img/__before.png");
-  // }
 
   &__tittle {
     min-height: 75px;
     padding: 25px 15px;
-
+    background: var(--color-grey-alt);
+    
     h1 {
       font-size: 1.375rem !important;
       font-weight: 700;
@@ -40,11 +62,16 @@
 
   &__details-container {
     padding: 20px 15px;
+    background: var(--color-grey-alt);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   &__details {
     font-size: 1rem;
-    // margin-bottom: 20px;
 
     p {
       margin: 0;

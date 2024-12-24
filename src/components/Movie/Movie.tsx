@@ -34,7 +34,7 @@ export const Movie: React.FC<IMovie> = ({ films, halls, seances, selectedDate })
             <div className="movie__tittle">
               <h3 className="movie__tittle-heading">{film.film_name}</h3>
               <p className="movie__tittle-description">
-                {film.film_description.slice(0, 210)}...
+                {film.film_description}
               </p>
               <p className="movie__tittle-movie-time">
                 {film.film_duration} минут {film.film_origin}

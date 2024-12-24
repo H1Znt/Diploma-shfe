@@ -6,6 +6,7 @@ import { ChangeBgImage } from "../ChangeBgImage";
 import { Container, Stack } from "react-bootstrap";
 import { Header } from "../Header";
 import HintSvg from "../../assets/hint.svg";
+import Monitor from "../../assets/Monitor.png"
 
 export const MovieSeance: React.FC = () => {
   const { seanceId } = useParams<{ seanceId: string }>();
@@ -184,7 +185,7 @@ export const MovieSeance: React.FC = () => {
           <div className="seance__places p-3 d-flex justify-content-center">
             <div className="seance__places-container ">
               <div className="w-100">
-                <div className="seance__places-screen">Экран</div>
+                <img className="seance__places-screen" src={Monitor} alt="" />
                 <div className="seance__seats-grid">
                   {seatConfig.map((row, rowIndex) => (
                     <div key={rowIndex} className="seance__seats-row">
