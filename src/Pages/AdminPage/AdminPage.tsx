@@ -4,13 +4,13 @@ import { Header } from "../../components/Header";
 import { ChangeBgImage } from "../../components/ChangeBgImage/ChangeBgImage";
 import { HallManagement } from "../../components/AdminPage";
 import { CreateHallModal } from "../../components/CreateHallModal";
-import { IFilm, IHall, ISeance } from "../../models";
+import { IHall } from "../../models";
 import "../../styles/_adminPage.scss";
 
 export const AdminPage = () => {
-  const [films, setFilms] = useState<IFilm[]>([]);
+  // const [films, setFilms] = useState<IFilm[]>([]);
   const [halls, setHalls] = useState<IHall[]>([]);
-  const [seances, setSeances] = useState<ISeance[]>([]);
+  // const [seances, setSeances] = useState<ISeance[]>([]);
   const [isClose, setIsClose] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -24,9 +24,9 @@ export const AdminPage = () => {
         })
           .then((response) => response.json())
           .then((data) => {
-            setFilms(data.result.films);
+            // setFilms(data.result.films);
             setHalls(data.result.halls);
-            setSeances(data.result.seances);
+            // setSeances(data.result.seances);
           });
       } catch (e) {
         console.error("Ошибка загрузки данных", e);
