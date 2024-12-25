@@ -7,7 +7,7 @@ import {
 import { Main } from "./Pages/Main";
 import { Login } from "./Pages/Login";
 import { ProtectedRoute } from "./hooks/ProtectedRoute";
-import { EditMovie } from "./Pages/EditMovie";
+import { AdminPage } from "./Pages/AdminPage";
 import { AuthProvider } from "./hooks/AuthProvider";
 import { AddMovie } from "./components/AddMovie";
 import { MovieSeance } from "./components/MovieSeance";
@@ -36,7 +36,7 @@ function App() {
             path="/movies/edit"
             element={
               <ProtectedRoute>
-                <EditMovie />
+                <AdminPage />
               </ProtectedRoute>
             }
           />

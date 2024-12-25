@@ -65,10 +65,10 @@ export const BookingTickets: React.FC = () => {
       };
     });
 
-    const params = new FormData()
+    const params = new FormData();
     params.set("seanceId", String(seanceId));
     params.set("ticketDate", selectedDate);
-    params.set("tickets", JSON.stringify(tickets))
+    params.set("tickets", JSON.stringify(tickets));
 
     try {
       setLoading(true);
@@ -145,7 +145,8 @@ export const BookingTickets: React.FC = () => {
                 <div className="booking-tickets__tittle tickets-decorator">
                   <h1>Вы выбрали билеты:</h1>
                 </div>
-                <div className="booking-tickets__details-container">
+                <div className="tickets__separator"></div>
+                <div className="booking-tickets__details-container tickets-decorator">
                   <div className="booking-tickets__details">
                     <p className="mb-2">
                       На фильм: <span>{filmName}</span>

@@ -39,7 +39,6 @@
 .booking-tickets__container {
   max-width: 990px !important;
   height: 100vh;
-  
 }
 
 .booking-tickets {
@@ -55,6 +54,8 @@
       font-weight: 700;
       line-height: 1.5625rem;
       text-transform: uppercase;
+
+      margin: 0;
 
       color: var(--color-seance-orange);
     }

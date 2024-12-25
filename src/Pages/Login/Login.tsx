@@ -22,8 +22,8 @@ export const Login: React.FC = () => {
   const [isLoading, setLoading] = useState(false);
   const { login, logout, transferIn } = useAuth();
 
-  const adminEmail = "shfe-diplom@netology.ru";
-  const adminPassword = "shfe-diplom"
+  // const adminEmail = "shfe-diplom@netology.ru";
+  // const adminPassword = "shfe-diplom"
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -43,10 +43,10 @@ export const Login: React.FC = () => {
     e.preventDefault();
 
     if (
-      // form.email !== "1@1" ||
-      // form.password !== "1"
-      form.email !== adminEmail ||
-      form.password !== adminPassword
+      form.email !== "1@1" ||
+      form.password !== "1"
+      // form.email !== adminEmail ||
+      // form.password !== adminPassword
     ) {
       setError("Неверный email или пароль");
       return;
