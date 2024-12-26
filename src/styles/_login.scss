@@ -79,8 +79,13 @@
       color: var(--base-color-admin-input) !important;
       width: 272px !important;
 
+      &:focus {
+        outline: var(--base-color-admin-top);
+        border-color: var(--base-color-admin-top);
+      }
+
       &::placeholder {
-        color: var(--base-color-admin-input) !important;
+        color: var(--base-color-admin-input);
       }
     }
 
