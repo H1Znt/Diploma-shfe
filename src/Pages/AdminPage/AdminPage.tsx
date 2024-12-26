@@ -63,15 +63,17 @@ export const AdminPage = () => {
         </div>
         <Stack className="admin-section__container">
           <header className="admin-section__header">
-            <div className="admin-section__header-tittle">
-              Управление залами
+            <div className="admin-section__header-container">
+              <div className="admin-section__header-tittle">
+                Управление залами
+              </div>
+              <div
+                className={`admin-section__header-close-button ${
+                  isClose ? "rotated" : ""
+                }`}
+                onClick={handleClose}
+              ></div>
             </div>
-            <div
-              className={`admin-section__header-close-button ${
-                isClose ? "rotated" : ""
-              }`}
-              onClick={handleClose}
-            ></div>
           </header>
           <section className={`admin-section__body ${closed}`}>
             <div>Доступные залы:</div>

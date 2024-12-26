@@ -31,14 +31,23 @@
   &__header {
     position: relative;
     display: flex;
-    flex-wrap: nowrap;
     align-items: center;
 
     background-color: var(--base-color-admin-top);
 
     width: 100%;
     height: 95px;
-    padding: 35px 42px 35px 104px;
+    padding-left: 90px;
+    padding-right: 30px;
+    
+    &-container {
+      width: 100%;
+
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: space-between;
+    }
 
     &-tittle {
       text-transform: uppercase;
@@ -49,10 +58,8 @@
     }
 
     &-close-button {
-      position: absolute;
       width: 24px;
       height: 16px;
-      right: 20px;
       background-image: url(/img/admin__arrow.png);
       background-size: cover;
       cursor: pointer;
@@ -119,7 +126,7 @@
 }
 
 @media (max-width: 390px) {
-  .admin-page__container{
+  .admin-page__container {
     max-width: 390px !important;
     width: 100%;
   }
@@ -139,14 +146,15 @@
 
     &__header {
       height: 65px;
-      padding-left: 67px;
+      padding-left: 57px;
+      padding-right: 20px;
 
       &::after {
         content: "";
         position: absolute;
         width: 22px;
         height: 22px;
-        left: 31px;
+        left: 21px;
         background-color: #fff;
         border-radius: 50px;
         border: 4px solid;
@@ -169,7 +177,7 @@
       width: 3px;
       height: 48px;
       top: 48px;
-      left: 61px;
+      left: 51px;
       background-color: #bc95d6;
     }
 
@@ -178,7 +186,7 @@
       position: absolute;
       width: 44px;
       height: 44px;
-      left: 40px;
+      left: 30px;
       background-color: #fff;
       border-radius: 50px;
       border: 4px solid;
@@ -194,7 +202,7 @@
       width: 3px;
       height: 100%;
       top: 0;
-      left: 61px;
+      left: 51px;
       background-color: #bc95d6;
     }
   }
