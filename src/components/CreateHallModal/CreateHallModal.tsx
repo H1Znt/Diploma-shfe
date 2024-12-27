@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IHall } from "../../models";
-import "../../styles/_createHallMoadal.scss";
+import "../../styles/_createHallModal.scss";
 
 interface CreateHallModalProps {
   onClose: () => void;
