@@ -9,17 +9,43 @@ interface IMovie {
   selectedDate: string | null;
 }
 
-export const Movie: React.FC<IMovie> = ({ films, halls, seances, selectedDate }) => {
+export const Movie: React.FC<IMovie> = ({
+  films,
+  halls,
+  seances,
+  selectedDate,
+}) => {
   const navigate = useNavigate();
 
   const handleSeanceClick = (seanceId: number) => {
-    navigate(`/movies/${seanceId}`, {
-      state: {
+    const selectedSeance = seances.find((seance) => seance.id === seanceId);
+    const selectedFilm = films.find(
+      (film) => film.id === selectedSeance?.seance_filmid
+    );
+    const selectedHall = halls.find(
+      (hall) => hall.id === selectedSeance?.seance_hallid
+    );
+
+    if (!selectedSeance || !selectedFilm || !selectedHall) {
+      console.error("Не удалось найти данные для выбранного сеанса");
+      return;
+    }
+
+    // Сохранить данные в sessionStorage
+    sessionStorage.setItem(
+      "movieSeanceData",
+      JSON.stringify({
+        seance: selectedSeance,
+        film: selectedFilm,
+        hall: selectedHall,
         selectedDate: selectedDate,
-      },
-    });
+      })
+    );
+
+    // Перейти на страницу сеанса
+    navigate(`/movies/${seanceId}`);
   };
-  
+
   return (
     <div className="movie">
       {films.map((film) => (

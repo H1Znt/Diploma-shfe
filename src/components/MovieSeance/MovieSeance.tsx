@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { ISeance, IHall, IFilm } from "../../models/index";
 import "../../styles/_movieSeance.scss";
 import { ChangeBgImage } from "../ChangeBgImage";
 import { Container, Stack } from "react-bootstrap";
 import { Header } from "../Header";
 import HintSvg from "../../assets/hint.svg";
-import Monitor from "../../assets/Monitor.png"
+import Monitor from "../../assets/Monitor.png";
 
 export const MovieSeance: React.FC = () => {
   const { seanceId } = useParams<{ seanceId: string }>();
@@ -14,66 +14,26 @@ export const MovieSeance: React.FC = () => {
   const [film, setFilm] = useState<IFilm | null>(null);
   const [hall, setHall] = useState<IHall | null>(null);
   const [selectedSeats, setSelectedSeats] = useState<number[][]>([]);
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
-  const { selectedDate } = location.state || {};
+  const navigate = useNavigate();
+  // const location = useLocation();
+
+  // const { selectedDate } = location.state || {};
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(
-          "https://shfe-diplom.neto-server.ru/alldata"
-        );
-        const data = await response.json();
-        console.log("Полученные данные:", data);
-
-        const selectedSeance = data.result.seances.find(
-          (s: ISeance) => s.id === parseInt(seanceId || "0")
-        );
-
-        console.log("Идентификатор сеанса:", seanceId);
-        console.log("Найденный сеанс:", selectedSeance);
-
-        if (!selectedSeance) {
-          console.error("Сеанс не найден");
-          return;
-        }
-
-        setSeance(selectedSeance);
-
-        const selectedFilm = data.result.films.find(
-          (f: IFilm) => f.id === selectedSeance.seance_filmid
-        );
-
-        console.log("Найденный фильм:", selectedFilm);
-
-        if (!selectedFilm) {
-          console.error("Фильм не найден");
-          return;
-        }
-
-        setFilm(selectedFilm);
-
-        const selectedHall = data.result.halls.find(
-          (h: IHall) => h.id === selectedSeance.seance_hallid
-        );
-
-        console.log("Найденный зал:", selectedHall);
-
-        if (!selectedHall) {
-          console.error("Зал не найден");
-          return;
-        }
-
-        setHall(selectedHall);
-      } catch (error) {
-        console.error("Ошибка загрузки данных:", error);
-      }
-    };
-
-    fetchData();
-  }, [seanceId]);
+    // Извлечь данные из sessionStorage
+    const storedData = sessionStorage.getItem("movieSeanceData");
+    if (storedData) {
+      const { seance, film, hall, selectedDate } = JSON.parse(storedData);
+      setSeance(seance);
+      setFilm(film);
+      setHall(hall);
+      setSelectedDate(selectedDate)
+    } else {
+      console.error("Данные для сеанса не найдены в sessionStorage");
+    }
+  }, []);
 
   if (!seance || !film || !hall) {
     return (

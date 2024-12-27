@@ -5,7 +5,7 @@ import { ChangeBgImage } from "../../components/ChangeBgImage/ChangeBgImage";
 import { HallManagement } from "../../components/AdminPage";
 import { CreateHallModal } from "../../components/CreateHallModal";
 import { IHall } from "../../models";
-import { HallConfig } from "../../components/HallConfig";
+// import { HallConfig } from "../../components/HallConfig";
 import "../../styles/_adminPage.scss";
 
 export const AdminPage = () => {
@@ -61,12 +61,12 @@ export const AdminPage = () => {
     setActiveHall(hall);
   };
 
-  const handleHallUpdated = (updatedHall: IHall) => {
-    setHalls((prevHalls) =>
-      prevHalls.map((hall) => (hall.id === updatedHall.id ? updatedHall : hall))
-    );
-    setActiveHall(updatedHall);
-  };
+  // const handleHallUpdated = (updatedHall: IHall) => {
+  //   setHalls((prevHalls) =>
+  //     prevHalls.map((hall) => (hall.id === updatedHall.id ? updatedHall : hall))
+  //   );
+  //   setActiveHall(updatedHall);
+  // };
 
   const toggleSection = (id: string) => {
     setSectionStates((prevStates) =>
