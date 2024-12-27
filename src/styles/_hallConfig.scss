@@ -1,0 +1,78 @@
+.hall-config-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.hall-config-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  label {
+    margin-right: 15px;
+
+    input {
+      width: 50px;
+      margin-left: 5px;
+    }
+  }
+}
+
+.hall-config-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .hall-screen {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .hall-row {
+    display: flex;
+
+    .hall-seat {
+      width: 30px;
+      height: 30px;
+      margin: 5px;
+      border-radius: 3px;
+      cursor: pointer;
+
+      &--standard {
+        background-color: #b0b0b0;
+      }
+
+      &--vip {
+        background-color: #4caf50;
+      }
+
+      &--blocked {
+        background-color: #f44336;
+      }
+    }
+  }
+}
+
+.hall-config-actions {
+  margin-top: 20px;
+
+  button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &.hall-config-cancel {
+      background-color: #f44336;
+      color: white;
+    }
+
+    &.hall-config-save {
+      background-color: #4caf50;
+      color: white;
+    }
+  }
+}

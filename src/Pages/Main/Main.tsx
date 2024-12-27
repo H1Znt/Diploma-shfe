@@ -70,7 +70,6 @@ export const Main: React.FC = () => {
   const handleDateClick = (date: Date): void => {
     const dateString = date.toISOString().split("T")[0]; // Формат yyyy-mm-dd
     setSelectedDate(dateString);
-    fetchMovies();
   };
 
   const handleNextDate = () => {

@@ -13,6 +13,9 @@ export interface ILoginForm {
 }
 
 export const Login: React.FC = () => {
+  const EMAIL_REGEXP =
+    /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+
   const [form, setForm] = useState<ILoginForm>({
     email: "",
     password: "",
@@ -39,38 +42,48 @@ export const Login: React.FC = () => {
     setForm((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const isEmailValid = (value: string) => {
+    return EMAIL_REGEXP.test(value);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (
-      form.email !== "1@1" ||
-      form.password !== "1"
-      // form.email !== adminEmail ||
-      // form.password !== adminPassword
-    ) {
-      setError("Неверный email или пароль");
-      return;
+    if (!isEmailValid(form.email)) {
+      setError("Неверная запись E-mail");
+      setLoading(false);
+      setDisabled(false);
+      return
+    } else {
+      setError("");
     }
 
     const params = new FormData();
     params.set("login", form.email);
-    params.set("password", form.password)
+    params.set("password", form.password);
 
     try {
       setLoading(true);
       setDisabled(true);
+      setError("");
+
       const response = await fetch("https://shfe-diplom.neto-server.ru/login", {
         method: "POST",
         body: params,
       });
 
-      if (response.ok) {
+      const data = await response.json();
+
+      if (data.success === true) {
         login();
-        setLoading(false);
         navigate(from, { replace: true });
+        setLoading(false);
+        setDisabled(false);
         console.log("Авторизация пройдена успешно!");
       } else {
-        setError("Ошибка сервера. Попробуйте позже.");
+        setLoading(false);
+        setDisabled(false);
+        setError("Неверный email или пароль");
       }
     } catch (e) {
       setError(`Произошла ошибка ${e}. Попробуйте позже.`);
@@ -137,6 +150,10 @@ export const Login: React.FC = () => {
                   {isLoading ? "Загрузка…" : "Авторизоваться"}
                 </Button>
               </Form>
+              <div className="mt-3 text-center">
+                <div>E-mail: shfe-diplom@netology.ru</div>
+                <div>Пароль: shfe-diplom</div>
+              </div>
             </Col>
           </Row>
         </Container>
