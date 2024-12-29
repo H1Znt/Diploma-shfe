@@ -23,6 +23,7 @@ export const AdminPage = () => {
     { id: "hallManagment", isOpen: true },
     { id: "hallConfig", isOpen: true },
     { id: "priceConfig", isOpen: true },
+    { id: "sessionGrid", isOpen: true },
   ]);
 
   useEffect(() => {
@@ -112,6 +113,7 @@ export const AdminPage = () => {
         setSelectedHallForConfig(originalHall);
       }
     }
+    
     if (selectedHallForPrice) {
       const originalHall = halls.find(
         (hall) => hall.id === selectedHallForPrice.id
@@ -257,6 +259,29 @@ export const AdminPage = () => {
                 onCancel={handleCancel}
               />
             )}
+          </section>
+        </Stack>
+
+        <Stack className="admin-section__container">
+          <header className="admin-section__header admin-section__header-both">
+            <div className="admin-section__header-container">
+              <div className="admin-section__header-tittle">
+                Сетка сеансов
+              </div>
+              <div
+                className={`admin-section__header-close-button ${
+                  isSectionOpen("sessionGrid") ? "" : "rotated"
+                }`}
+                onClick={() => toggleSection("sessionGrid")}
+              ></div>
+            </div>
+          </header>
+          <section
+            className={`admin-section__body ${
+              isSectionOpen("sessionGrid") ? "" : "admin-section__hidden"
+            }`}
+          >
+          
           </section>
         </Stack>
       </Container>

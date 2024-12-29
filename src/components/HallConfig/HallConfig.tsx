@@ -38,16 +38,20 @@ export const HallConfig: React.FC<HallConfigProps> = ({
   }, [rows, places]);
 
   const handleSeatClick = (rowIndex: number, placeIndex: number) => {
-    const updatedConfig = [...config];
-    const currentType = updatedConfig[rowIndex][placeIndex];
-    const nextType =
-      currentType === "standart"
-        ? "vip"
-        : currentType === "vip"
-        ? "disabled"
-        : "standart";
-    updatedConfig[rowIndex][placeIndex] = nextType;
-    console.log(`Row: ${rowIndex}, Place: ${placeIndex}, Type: ${nextType}`);
+    const updatedConfig = config.map((row, rIndex) =>
+      rIndex === rowIndex
+        ? row.map((seat, pIndex) =>
+            pIndex === placeIndex
+              ? seat === "standart"
+                ? "vip"
+                : seat === "vip"
+                ? "disabled"
+                : "standart"
+              : seat
+          )
+        : row
+    );
+
     setConfig(updatedConfig);
     setIsModified(true);
   };
@@ -92,7 +96,7 @@ export const HallConfig: React.FC<HallConfigProps> = ({
 
   const handleRowsChange = (newRows: string) => {
     if (newRows === "") {
-      setRows(0); 
+      setRows(0);
       setIsModified(true);
       return;
     }
@@ -154,7 +158,7 @@ export const HallConfig: React.FC<HallConfigProps> = ({
               onChange={(e) => handlePlacesChange(e.target.value)}
               onBlur={() => {
                 if (!places || places < 1) setPlaces(1);
-                if (places > 10) setPlaces(10); 
+                if (places > 10) setPlaces(10);
               }}
             />
           </label>
