@@ -5,6 +5,7 @@ import { ChangeBgImage } from "../../components/ChangeBgImage/ChangeBgImage";
 import { HallManagement } from "../../components/AdminPage";
 import { CreateHallModal } from "../../components/CreateHallModal";
 import { HallConfig } from "../../components/HallConfig";
+import { PriceConfig } from "../../components/PriceConfig";
 import { IHall } from "../../models";
 import "../../styles/_adminPage.scss";
 
@@ -14,10 +15,14 @@ export const AdminPage = () => {
   // const [seances, setSeances] = useState<ISeance[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   // const [activeHall, setActiveHall] = useState<IHall | null>(null);
-  const [selectedHall, setSelectedHall] = useState<IHall | null>(null);
+  const [selectedHallForConfig, setSelectedHallForConfig] =
+    useState<IHall | null>(null);
+  const [selectedHallForPrice, setSelectedHallForPrice] =
+    useState<IHall | null>(null);
   const [sectionStates, setSectionStates] = useState([
     { id: "hallManagment", isOpen: true },
     { id: "hallConfig", isOpen: true },
+    { id: "priceConfig", isOpen: true },
   ]);
 
   useEffect(() => {
@@ -32,7 +37,8 @@ export const AdminPage = () => {
             // setSeances(data.result.seances);
             setHalls(data.result.halls);
             if (data.result.halls.length > 0) {
-              setSelectedHall(data.result.halls[0]);
+              setSelectedHallForConfig(data.result.halls[0]);
+              setSelectedHallForPrice(data.result.halls[0]);
             }
           });
       } catch (e) {
@@ -69,27 +75,50 @@ export const AdminPage = () => {
   const isSectionOpen = (id: string) =>
     sectionStates.find((section) => section.id === id)?.isOpen;
 
+  const handleHallConfigClick = (hall: IHall) => {
+    if (selectedHallForConfig?.id !== hall.id) {
+      setSelectedHallForConfig(hall);
+    }
+  };
+
+  const handleHallPriceClick = (hall: IHall) => {
+    if (selectedHallForPrice?.id !== hall.id) {
+      setSelectedHallForPrice(hall);
+    }
+  };
+
   const handleSave = (updatedHallData: IHall) => {
     setHalls((prevHalls) =>
       prevHalls.map((hall) =>
         hall.id === updatedHallData.id ? updatedHallData : hall
       )
     );
-    setSelectedHall(updatedHallData);
-  };
 
-  const handleCancel = () => {
-    if (selectedHall) {
-      const originalHall = halls.find((hall) => hall.id === selectedHall.id);
-      if (originalHall) {
-        setSelectedHall(originalHall);
-      }
+    if (selectedHallForConfig?.id === updatedHallData.id) {
+      setSelectedHallForConfig(updatedHallData);
+    }
+
+    if (selectedHallForPrice?.id === updatedHallData.id) {
+      setSelectedHallForPrice(updatedHallData);
     }
   };
 
-  const handleHallClick = (hall: IHall) => {
-    if (selectedHall?.id !== hall.id) {
-      setSelectedHall(hall);
+  const handleCancel = () => {
+    if (selectedHallForConfig) {
+      const originalHall = halls.find(
+        (hall) => hall.id === selectedHallForConfig.id
+      );
+      if (originalHall) {
+        setSelectedHallForConfig(originalHall);
+      }
+    }
+    if (selectedHallForPrice) {
+      const originalHall = halls.find(
+        (hall) => hall.id === selectedHallForPrice.id
+      );
+      if (originalHall) {
+        setSelectedHallForPrice(originalHall);
+      }
     }
   };
 
@@ -99,6 +128,7 @@ export const AdminPage = () => {
         <div className="admin-page__header">
           <Header />
         </div>
+        
         <Stack className="admin-section__container">
           <header className="admin-section__header">
             <div className="admin-section__header-container">
@@ -139,6 +169,7 @@ export const AdminPage = () => {
             </button>
           </section>
         </Stack>
+
         <Stack className="admin-section__container">
           <header className="admin-section__header admin-section__header-both">
             <div className="admin-section__header-container">
@@ -160,26 +191,68 @@ export const AdminPage = () => {
           >
             <div className="mb-3">Выберите зал для конфигурации:</div>
             <div className="admin-section__hall-config">
-              {halls.map((hall) => {
-                if (halls.length === 0) return null;
-                return (
-                  <div
-                    className={`admin-section__hall-item ${
-                      selectedHall?.id === hall.id
-                        ? "admin-section__hall-item-selected"
-                        : ""
-                    }`}
-                    key={hall.id}
-                    onClick={() => handleHallClick(hall)}
-                  >
-                    {hall.hall_name}
-                  </div>
-                );
-              })}
+              {halls.map((hall) => (
+                <div
+                  className={`admin-section__hall-item ${
+                    selectedHallForConfig?.id === hall.id
+                      ? "admin-section__hall-item-selected"
+                      : ""
+                  }`}
+                  key={hall.id}
+                  onClick={() => handleHallConfigClick(hall)}
+                >
+                  {hall.hall_name}
+                </div>
+              ))}
             </div>
-            {selectedHall && (
+            {selectedHallForConfig && (
               <HallConfig
-                hallData={selectedHall}
+                hallData={selectedHallForConfig}
+                onSave={handleSave}
+                onCancel={handleCancel}
+              />
+            )}
+          </section>
+        </Stack>
+
+        <Stack className="admin-section__container">
+          <header className="admin-section__header admin-section__header-both">
+            <div className="admin-section__header-container">
+              <div className="admin-section__header-tittle">
+                Конфигурация цен
+              </div>
+              <div
+                className={`admin-section__header-close-button ${
+                  isSectionOpen("priceConfig") ? "" : "rotated"
+                }`}
+                onClick={() => toggleSection("priceConfig")}
+              ></div>
+            </div>
+          </header>
+          <section
+            className={`admin-section__body ${
+              isSectionOpen("priceConfig") ? "" : "admin-section__hidden"
+            }`}
+          >
+            <div className="mb-3">Выберите зал для конфигурации:</div>
+            <div className="admin-section__hall-config">
+              {halls.map((hall) => (
+                <div
+                  className={`admin-section__hall-item ${
+                    selectedHallForPrice?.id === hall.id
+                      ? "admin-section__hall-item-selected"
+                      : ""
+                  }`}
+                  key={hall.id}
+                  onClick={() => handleHallPriceClick(hall)}
+                >
+                  {hall.hall_name}
+                </div>
+              ))}
+            </div>
+            {selectedHallForPrice && (
+              <PriceConfig
+                hallData={selectedHallForPrice}
                 onSave={handleSave}
                 onCancel={handleCancel}
               />
