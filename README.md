@@ -3,8 +3,7 @@
 ### Стэк технологий, используемых в процессе работы над проектом.
 > React, React Router, React Hooks, React-bootstrap, Bootstrap.<br>
 > HTML, SCSS, TypeScript.<br>
-> Vite, Figma.
-<br>
+> Vite, Figma. <br>
   
 - [Страница на gh-pages](https://h1znt.github.io/Diploma-shfe/  "Ссылка на сайт")
   
