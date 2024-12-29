@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ISeance, IHall, IFilm } from "../../models/index";
-import "../../styles/_movieSeance.scss";
 import { ChangeBgImage } from "../ChangeBgImage";
 import { Container, Stack } from "react-bootstrap";
 import { Header } from "../Header";
 import HintSvg from "../../assets/hint.svg";
 import Monitor from "../../assets/Monitor.png";
+import "../../styles/_movieSeance.scss";
 
 export const MovieSeance: React.FC = () => {
   const { seanceId } = useParams<{ seanceId: string }>();
@@ -17,12 +17,8 @@ export const MovieSeance: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
   const navigate = useNavigate();
-  // const location = useLocation();
-
-  // const { selectedDate } = location.state || {};
 
   useEffect(() => {
-    // Извлечь данные из sessionStorage
     const storedData = sessionStorage.getItem("movieSeanceData");
     if (storedData) {
       const { seance, film, hall, selectedDate } = JSON.parse(storedData);

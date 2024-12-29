@@ -31,7 +31,6 @@ export const Movie: React.FC<IMovie> = ({
       return;
     }
 
-    // Сохранить данные в sessionStorage
     sessionStorage.setItem(
       "movieSeanceData",
       JSON.stringify({
@@ -42,7 +41,6 @@ export const Movie: React.FC<IMovie> = ({
       })
     );
 
-    // Перейти на страницу сеанса
     navigate(`/movies/${seanceId}`);
   };
 

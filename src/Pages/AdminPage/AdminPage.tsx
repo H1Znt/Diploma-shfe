@@ -4,8 +4,8 @@ import { Header } from "../../components/Header";
 import { ChangeBgImage } from "../../components/ChangeBgImage/ChangeBgImage";
 import { HallManagement } from "../../components/AdminPage";
 import { CreateHallModal } from "../../components/CreateHallModal";
+import { HallConfig } from "../../components/HallConfig";
 import { IHall } from "../../models";
-// import { HallConfig } from "../../components/HallConfig";
 import "../../styles/_adminPage.scss";
 
 export const AdminPage = () => {
@@ -13,7 +13,8 @@ export const AdminPage = () => {
   const [halls, setHalls] = useState<IHall[]>([]);
   // const [seances, setSeances] = useState<ISeance[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [activeHall, setActiveHall] = useState<IHall | null>(null);
+  // const [activeHall, setActiveHall] = useState<IHall | null>(null);
+  const [selectedHall, setSelectedHall] = useState<IHall | null>(null);
   const [sectionStates, setSectionStates] = useState([
     { id: "hallManagment", isOpen: true },
     { id: "hallConfig", isOpen: true },
@@ -28,10 +29,10 @@ export const AdminPage = () => {
           .then((response) => response.json())
           .then((data) => {
             // setFilms(data.result.films);
-            setHalls(data.result.halls);
             // setSeances(data.result.seances);
+            setHalls(data.result.halls);
             if (data.result.halls.length > 0) {
-              setActiveHall(data.result.halls[0]);
+              setSelectedHall(data.result.halls[0]);
             }
           });
       } catch (e) {
@@ -57,17 +58,6 @@ export const AdminPage = () => {
     setHalls(updatedHalls);
   };
 
-  const handleConfigureHall = (hall: IHall) => {
-    setActiveHall(hall);
-  };
-
-  // const handleHallUpdated = (updatedHall: IHall) => {
-  //   setHalls((prevHalls) =>
-  //     prevHalls.map((hall) => (hall.id === updatedHall.id ? updatedHall : hall))
-  //   );
-  //   setActiveHall(updatedHall);
-  // };
-
   const toggleSection = (id: string) => {
     setSectionStates((prevStates) =>
       prevStates.map((section) =>
@@ -78,6 +68,30 @@ export const AdminPage = () => {
 
   const isSectionOpen = (id: string) =>
     sectionStates.find((section) => section.id === id)?.isOpen;
+
+  const handleSave = (updatedHallData: IHall) => {
+    setHalls((prevHalls) =>
+      prevHalls.map((hall) =>
+        hall.id === updatedHallData.id ? updatedHallData : hall
+      )
+    );
+    setSelectedHall(updatedHallData);
+  };
+
+  const handleCancel = () => {
+    if (selectedHall) {
+      const originalHall = halls.find((hall) => hall.id === selectedHall.id);
+      if (originalHall) {
+        setSelectedHall(originalHall);
+      }
+    }
+  };
+
+  const handleHallClick = (hall: IHall) => {
+    if (selectedHall?.id !== hall.id) {
+      setSelectedHall(hall);
+    }
+  };
 
   return (
     <ChangeBgImage>
@@ -144,34 +158,32 @@ export const AdminPage = () => {
               isSectionOpen("hallConfig") ? "" : "admin-section__hidden"
             }`}
           >
-            <div className="">
-              <div>Выберите зал для конфигурации:</div>
-              <div className="d-flex">
-                {halls.map((hall) => (
-                  <div key={hall.id} className="">
-                    <button
-                      onClick={() => handleConfigureHall(hall)}
-                      className={`admin-section__hall-button ${
-                        activeHall?.id === hall.id ? "active" : ""
-                      }`}
-                    >
-                      {hall.hall_name}
-                    </button>
+            <div className="mb-3">Выберите зал для конфигурации:</div>
+            <div className="admin-section__hall-config">
+              {halls.map((hall) => {
+                if (halls.length === 0) return null;
+                return (
+                  <div
+                    className={`admin-section__hall-item ${
+                      selectedHall?.id === hall.id
+                        ? "admin-section__hall-item-selected"
+                        : ""
+                    }`}
+                    key={hall.id}
+                    onClick={() => handleHallClick(hall)}
+                  >
+                    {hall.hall_name}
                   </div>
-                ))}
-              </div>
-              {/* {activeHall ? (
-                <HallConfig
-                  hallId={activeHall.id}
-                  initialRows={activeHall.hall_rows}
-                  initialPlaces={activeHall.hall_places}
-                  initialConfig={activeHall.hall_config}
-                  onSave={handleHallUpdated}
-                />
-              ) : (
-                halls.length > 0 && <div>Выберите зал для конфигурации</div>
-              )} */}
+                );
+              })}
             </div>
+            {selectedHall && (
+              <HallConfig
+                hallData={selectedHall}
+                onSave={handleSave}
+                onCancel={handleCancel}
+              />
+            )}
           </section>
         </Stack>
       </Container>

@@ -1,135 +1,195 @@
-// import React, { useState } from "react";
-// import { IFilm } from "../../models";
-// import "../../styles/_hallConfig.scss";
+import { useEffect, useState } from "react";
+import { IHall } from "../../models";
+import { Notification } from "../../hooks/Notification";
+import "../../styles/_hallConfig.scss";
 
-// interface HallConfigProps {
-//   hallId: number;
-//   initialRows: number;
-//   initialPlaces: number;
-//   initialConfig: string[][];
-//   onSave: (updatedHall: IFilm) => void;
-// }
+type HallConfigProps = {
+  hallData: IHall;
+  onSave: (updatedHallData: IHall) => void;
+  onCancel: () => void;
+};
 
-// export const HallConfig: React.FC<HallConfigProps> = ({
-//   hallId,
-//   initialRows,
-//   initialPlaces,
-//   initialConfig,
-//   onSave,
-// }) => {
-//   const [rowCount, setRowCount] = useState(initialRows);
-//   const [placeCount, setPlaceCount] = useState(initialPlaces);
-//   const [config, setConfig] = useState(initialConfig);
+export const HallConfig: React.FC<HallConfigProps> = ({
+  hallData,
+  onSave,
+  onCancel,
+}) => {
+  const [rows, setRows] = useState(hallData.hall_rows);
+  const [places, setPlaces] = useState(hallData.hall_places);
+  const [config, setConfig] = useState(hallData.hall_config);
+  const [isModified, setIsModified] = useState(false);
+  const [isNotificationVisible, setIsNotificationVisible] = useState(false);
 
-//   const handleSeatClick = (rowIndex: number, placeIndex: number) => {
-//     const updatedConfig = [...config];
-//     const currentType = updatedConfig[rowIndex][placeIndex];
-//     const nextType =
-//       currentType === "standart"
-//         ? "vip"
-//         : currentType === "vip"
-//         ? "disabled"
-//         : "standart";
-//     updatedConfig[rowIndex][placeIndex] = nextType;
-//     setConfig(updatedConfig);
-//   };
+  useEffect(() => {
+    setRows(hallData.hall_rows);
+    setPlaces(hallData.hall_places);
+    setConfig(hallData.hall_config);
+    setIsModified(false);
+  }, [hallData]);
 
-//   const handleSave = async () => {
-//     const formData = new FormData();
-//     formData.set("rowCount", rowCount.toString());
-//     formData.set("placeCount", placeCount.toString());
-//     formData.set("config", JSON.stringify(config));
+  useEffect(() => {
+    const updatedConfig = Array.from({ length: rows }, (_, rowIndex) =>
+      Array.from(
+        { length: places },
+        (_, placeIndex) => config[rowIndex]?.[placeIndex] || "disabled"
+      )
+    );
+    setConfig(updatedConfig);
+  }, [rows, places]);
 
-//     try {
-//       const response = await fetch(
-//         `https://shfe-diplom.neto-server.ru/hall/${hallId}`,
-//         {
-//           method: "POST",
-//           body: formData,
-//         }
-//       );
-//       const updatedHall = await response.json();
-//       onSave(updatedHall);
-//     } catch (error) {
-//       console.error("Ошибка сохранения конфигурации зала", error);
-//     }
-//   };
+  const handleSeatClick = (rowIndex: number, placeIndex: number) => {
+    const updatedConfig = [...config];
+    const currentType = updatedConfig[rowIndex][placeIndex];
+    const nextType =
+      currentType === "standart"
+        ? "vip"
+        : currentType === "vip"
+        ? "disabled"
+        : "standart";
+    updatedConfig[rowIndex][placeIndex] = nextType;
+    console.log(`Row: ${rowIndex}, Place: ${placeIndex}, Type: ${nextType}`);
+    setConfig(updatedConfig);
+    setIsModified(true);
+  };
 
-//   const renderSeat = (seatType: string, rowIndex: number, placeIndex: number) => {
-//     const seatClass =
-//       seatType === "standart"
-//         ? "seat-standart"
-//         : seatType === "vip"
-//         ? "seat-vip"
-//         : "seat-disabled";
-//     return (
-//       <div
-//         key={`${rowIndex}-${placeIndex}`}
-//         className={`seat ${seatClass}`}
-//         onClick={() => handleSeatClick(rowIndex, placeIndex)}
-//       />
-//     );
-//   };
+  const handleSave = () => {
+    const updatedHallData: IHall = {
+      ...hallData,
+      hall_rows: rows,
+      hall_places: places,
+      hall_config: config,
+    };
 
-//   const handleRowChange = (newRowCount: number) => {
-//     const updatedConfig = [...config];
-//     if (newRowCount > rowCount) {
-//       for (let i = rowCount; i < newRowCount; i++) {
-//         updatedConfig.push(Array(placeCount).fill("standart"));
-//       }
-//     } else {
-//       updatedConfig.length = newRowCount;
-//     }
-//     setRowCount(newRowCount);
-//     setConfig(updatedConfig);
-//   };
+    const params = new FormData();
+    params.set("rowCount", rows.toString());
+    params.set("placeCount", places.toString());
+    params.set("config", JSON.stringify(config));
 
-//   const handlePlaceChange = (newPlaceCount: number) => {
-//     const updatedConfig = config.map((row) => {
-//       const newRow = [...row];
-//       if (newPlaceCount > placeCount) {
-//         newRow.push(...Array(newPlaceCount - placeCount).fill("standart"));
-//       } else {
-//         newRow.length = newPlaceCount;
-//       }
-//       return newRow;
-//     });
-//     setPlaceCount(newPlaceCount);
-//     setConfig(updatedConfig);
-//   };
+    fetch(`https://shfe-diplom.neto-server.ru/hall/${hallData.id}`, {
+      method: "POST",
+      body: params,
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        onSave(updatedHallData);
+        setIsNotificationVisible(true);
+      })
+      .catch((error) =>
+        console.error("Ошибка сохранения конфигурации: ", error)
+      );
 
-//   return (
-//     <div className="hall-config">
-//       <div className="hall-config-controls">
-//         <label>
-//           Рядов:
-//           <input
-//             type="number"
-//             min="1"
-//             value={rowCount}
-//             onChange={(e) => handleRowChange(Number(e.target.value))}
-//           />
-//         </label>
-//         <label>
-//           Мест в ряду:
-//           <input
-//             type="number"
-//             min="1"
-//             value={placeCount}
-//             onChange={(e) => handlePlaceChange(Number(e.target.value))}
-//           />
-//         </label>
-//       </div>
-//       <div className="hall-config-seats">
-//         {config.map((row, rowIndex) => (
-//           <div key={rowIndex} className="hall-config-row">
-//             {row.map((seat, placeIndex) =>
-//               renderSeat(seat, rowIndex, placeIndex)
-//             )}
-//           </div>
-//         ))}
-//       </div>
-//       <button onClick={handleSave}>Сохранить</button>
-//     </div>
-//   );
-// };
+    setIsModified(false);
+  };
+
+  const handleCancel = () => {
+    setRows(hallData.hall_rows);
+    setPlaces(hallData.hall_places);
+    setConfig(hallData.hall_config);
+    setIsModified(false);
+    onCancel();
+  };
+
+  const handleRowsChange = (newRows: string) => {
+    const parsedRows = parseInt(newRows, 10);
+
+    if (!isNaN(parsedRows) && parsedRows >= 1 && parsedRows <= 10) {
+      setRows(parsedRows);
+      setIsModified(true);
+    }
+  };
+
+  const handlePlacesChange = (newPlaces: string) => {
+    const parsedPlaces = parseInt(newPlaces, 10);
+
+    if (!isNaN(parsedPlaces) && parsedPlaces >= 1 && parsedPlaces <= 10) {
+      setPlaces(parsedPlaces);
+      setIsModified(true);
+    }
+  };
+
+  return (
+    <div className="hall-config">
+      <div className="hall-config__controls">
+        <div className="hall-config__controls-tittle">
+          Укажите количество рядов и максимальное количество кресел в ряду:
+        </div>
+        <div className="hall-config__controls-places">
+          <label>
+            Рядов, шт
+            <input
+              type="number"
+              value={rows}
+              min="1"
+              max="10"
+              onChange={(e) => handleRowsChange(e.target.value)}
+            />
+          </label>
+          <span>x</span>
+          <label>
+            Мест, шт
+            <input
+              type="number"
+              value={places}
+              min="1"
+              max="10"
+              onChange={(e) => handlePlacesChange(e.target.value)}
+            />
+          </label>
+        </div>
+      </div>
+      <div className="hall-config__types-of-chairs">
+        <div className="hall-config__types-of-chairs-info">
+          <span>Теперь вы можете указать типы кресел на схеме зала:</span>
+          <div className="hall-config__types-of-chairs-info-container">
+            <div className="hall-config__types-of-chairs-info-row">
+              <div className="box hall-config__types-of-chairs-seat-standart"></div>
+              <div>— обычные кресла</div>
+            </div>{" "}
+            <div className="hall-config__types-of-chairs-info-row">
+              <div className="box hall-config__types-of-chairs-seat-vip"></div>
+              <div>— VIP кресла</div>
+            </div>{" "}
+            <div className="hall-config__types-of-chairs-info-row">
+              <div className="box hall-config__types-of-chairs-seat-disabled "></div>
+              <div>— заблокированные (нет кресла)</div>
+            </div>
+          </div>
+        </div>
+        <div className="hall-config__types-of-chairs-tittle">
+          Чтобы изменить вид кресла, нажмите по нему левой кнопкой мыши
+        </div>
+        <div className="hall-config__types-of-chairs-screen">
+          <div className="hall-config__types-of-chairs-screen-tittle">
+            ЭКРАН
+          </div>
+          <div className="hall-config__types-of-chairs-seats">
+            {config.map((row, rowIndex) => (
+              <div key={rowIndex} className="hall-config__types-of-chairs-row">
+                {row.map((seat, placeIndex) => (
+                  <button
+                    key={placeIndex}
+                    className={`box hall-config__types-of-chairs-seat hall-config__types-of-chairs-seat-${seat}`}
+                    onClick={() => handleSeatClick(rowIndex, placeIndex)}
+                  ></button>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      {isModified && (
+        <div className="hall-config__actions">
+          <button onClick={handleCancel}>ОТМЕНА</button>
+          <button onClick={handleSave}>СОХРАНИТЬ</button>
+        </div>
+      )}
+      {isNotificationVisible && (
+          <Notification
+            message="Данные успешно сохранены!"
+            onClose={() => setIsNotificationVisible(false)}
+          />
+        )}
+    </div>
+  );
+};
