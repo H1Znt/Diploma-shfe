@@ -91,18 +91,30 @@ export const HallConfig: React.FC<HallConfigProps> = ({
   };
 
   const handleRowsChange = (newRows: string) => {
+    if (newRows === "") {
+      setRows(0); 
+      setIsModified(true);
+      return;
+    }
+
     const parsedRows = parseInt(newRows, 10);
 
-    if (!isNaN(parsedRows) && parsedRows >= 1 && parsedRows <= 10) {
+    if (!isNaN(parsedRows)) {
       setRows(parsedRows);
       setIsModified(true);
     }
   };
 
   const handlePlacesChange = (newPlaces: string) => {
+    if (newPlaces === "") {
+      setPlaces(0);
+      setIsModified(true);
+      return;
+    }
+
     const parsedPlaces = parseInt(newPlaces, 10);
 
-    if (!isNaN(parsedPlaces) && parsedPlaces >= 1 && parsedPlaces <= 10) {
+    if (!isNaN(parsedPlaces)) {
       setPlaces(parsedPlaces);
       setIsModified(true);
     }
@@ -119,10 +131,15 @@ export const HallConfig: React.FC<HallConfigProps> = ({
             Рядов, шт
             <input
               type="number"
-              value={rows}
+              value={rows || ""}
+              inputMode="numeric"
               min="1"
               max="10"
               onChange={(e) => handleRowsChange(e.target.value)}
+              onBlur={() => {
+                if (!rows || rows < 1) setRows(1);
+                if (rows > 10) setRows(10);
+              }}
             />
           </label>
           <span>x</span>
@@ -130,10 +147,15 @@ export const HallConfig: React.FC<HallConfigProps> = ({
             Мест, шт
             <input
               type="number"
-              value={places}
+              value={places || ""}
+              inputMode="numeric"
               min="1"
               max="10"
               onChange={(e) => handlePlacesChange(e.target.value)}
+              onBlur={() => {
+                if (!places || places < 1) setPlaces(1);
+                if (places > 10) setPlaces(10); 
+              }}
             />
           </label>
         </div>
@@ -185,11 +207,11 @@ export const HallConfig: React.FC<HallConfigProps> = ({
         </div>
       )}
       {isNotificationVisible && (
-          <Notification
-            message="Данные успешно сохранены!"
-            onClose={() => setIsNotificationVisible(false)}
-          />
-        )}
+        <Notification
+          message="Данные успешно сохранены!"
+          onClose={() => setIsNotificationVisible(false)}
+        />
+      )}
     </div>
   );
 };
