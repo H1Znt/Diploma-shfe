@@ -5,11 +5,13 @@
 > HTML, SCSS, TypeScript.<br>
 > Vite, Figma.
 <br>
-- [Макет страниц в Figma](https://www.figma.com/file/zGf2lm7mUBGeXWlZQyf9LH/%D0%94%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD-%D0%BC%D0%B0%D0%BA%D0%B5%D1%82-(1)?type=design&mode=design "Макет страницы в Figma")
-
+  
 - [Страница на gh-pages](https://h1znt.github.io/Diploma-shfe/  "Ссылка на сайт")
+  
+- [Макет страниц в Figma](https://www.figma.com/file/zGf2lm7mUBGeXWlZQyf9LH/%D0%94%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD-%D0%BC%D0%B0%D0%BA%D0%B5%D1%82-(1)?type=design&mode=design "Макет страницы в Figma")
  
 ### Описание проекта
+
 
 - сайт бронирования билетов онлайн,
 - административная часть сайта.
