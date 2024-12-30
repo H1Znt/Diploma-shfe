@@ -233,13 +233,38 @@
 }
 
 @media (min-width: 391px) {
-  .admin-section__header {
+  .admin-section__header-alone {
     &::before {
       content: "";
       position: absolute;
       width: 3px;
       height: 48px;
       top: 48px;
+      left: 51px;
+      background-color: #bc95d6;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 44px;
+      height: 44px;
+      left: 30px;
+      background-color: #fff;
+      border-radius: 50px;
+      border: 4px solid;
+      border-color: #bc95d6;
+      box-sizing: border-box;
+    }
+  }
+
+  .admin-section__header-last {
+    &::before {
+      content: "";
+      position: absolute;
+      width: 3px;
+      height: 48px;
+      top: 0;
       left: 51px;
       background-color: #bc95d6;
     }
@@ -272,7 +297,7 @@
     }
   }
 
-  .admin-section__body {
+  .admin-section__body-both {
     &::before {
       content: "";
       position: absolute;

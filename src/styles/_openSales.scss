@@ -1,0 +1,46 @@
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
+  }
+
+  @media (hover: none) {
+    &:active {
+      @content;
+    }
+  }
+}
+
+.open-sales {
+  &__tittle {
+    text-align: center;
+
+    margin-bottom: 29px;
+  }
+  &__actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+
+    button {
+      height: 40px;
+      width: 270px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      line-height: 1rem;
+
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+
+      background-color: var(--base-color-button);
+      color: white;
+
+      @include hover {
+        background-color: var(--base-color-admin-top);
+        border: none !important;
+      }
+    }
+  }
+}

@@ -12,7 +12,7 @@ export const CreateHallModal: React.FC<CreateHallModalProps> = ({
   onHallCreated,
 }) => {
   const [hallName, setHallName] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false); // Состояние отправки
+  const [isSubmitting, setIsSubmitting] = useState(false); 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,8 +32,8 @@ export const CreateHallModal: React.FC<CreateHallModalProps> = ({
       const data = await response.json();
 
       if (data.success && data.result?.halls) {
-        onHallCreated(data.result.halls); // Передаём обновлённые залы в AdminPage
-        onClose(); // Закрываем модальное окно после успешного добавления
+        onHallCreated(data.result.halls); 
+        onClose(); 
       } else {
         console.error("Ошибка создания зала:", data.message);
       }

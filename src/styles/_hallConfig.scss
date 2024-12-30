@@ -172,7 +172,7 @@
         background-color: #fff;
         color: var(--base-color-admin-top);
 
-        &:hover {
+        &:active {
           background-color: var(--base-color-admin-top);
           color: #fff;
         }
@@ -184,7 +184,7 @@
         background-color: var(--base-color-button);
         color: white;
 
-        &:hover {
+        &:active {
           background-color: var(--base-color-admin-top);
         }
       }

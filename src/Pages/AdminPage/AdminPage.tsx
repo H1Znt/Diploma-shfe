@@ -6,24 +6,29 @@ import { HallManagement } from "../../components/AdminPage";
 import { CreateHallModal } from "../../components/CreateHallModal";
 import { HallConfig } from "../../components/HallConfig";
 import { PriceConfig } from "../../components/PriceConfig";
-import { IHall } from "../../models";
+import { IFilm, IHall } from "../../models";
 import "../../styles/_adminPage.scss";
+import { OpenSales } from "../../components/OpenSales";
+import { AddFilmModal } from "../../components/AddFilmModal";
 
 export const AdminPage = () => {
-  // const [films, setFilms] = useState<IFilm[]>([]);
+  const [films, setFilms] = useState<IFilm[]>([]);
   const [halls, setHalls] = useState<IHall[]>([]);
   // const [seances, setSeances] = useState<ISeance[]>([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [activeHall, setActiveHall] = useState<IHall | null>(null);
+  const [isHallModalOpen, setIsHallModalOpen] = useState(false);
+  const [isFilmModalOpen, setIsFilmModalOpen] = useState(false);
   const [selectedHallForConfig, setSelectedHallForConfig] =
     useState<IHall | null>(null);
   const [selectedHallForPrice, setSelectedHallForPrice] =
+    useState<IHall | null>(null);
+  const [selectedHallForOrder, setSelectedHallForOrder] =
     useState<IHall | null>(null);
   const [sectionStates, setSectionStates] = useState([
     { id: "hallManagment", isOpen: true },
     { id: "hallConfig", isOpen: true },
     { id: "priceConfig", isOpen: true },
     { id: "sessionGrid", isOpen: true },
+    { id: "openSales", isOpen: true },
   ]);
 
   useEffect(() => {
@@ -34,12 +39,13 @@ export const AdminPage = () => {
         })
           .then((response) => response.json())
           .then((data) => {
-            // setFilms(data.result.films);
+            setFilms(data.result.films);
             // setSeances(data.result.seances);
             setHalls(data.result.halls);
             if (data.result.halls.length > 0) {
               setSelectedHallForConfig(data.result.halls[0]);
               setSelectedHallForPrice(data.result.halls[0]);
+              setSelectedHallForOrder(data.result.halls[0]);
             }
           });
       } catch (e) {
@@ -65,6 +71,10 @@ export const AdminPage = () => {
     setHalls(updatedHalls);
   };
 
+  const handleFilmAdded = (updatedFilms: IFilm[]) => {
+    setFilms(updatedFilms);
+  };
+
   const toggleSection = (id: string) => {
     setSectionStates((prevStates) =>
       prevStates.map((section) =>
@@ -88,6 +98,12 @@ export const AdminPage = () => {
     }
   };
 
+  const handleHallOrderClick = (hall: IHall) => {
+    if (selectedHallForOrder?.id !== hall.id) {
+      setSelectedHallForOrder(hall);
+    }
+  };
+
   const handleSave = (updatedHallData: IHall) => {
     setHalls((prevHalls) =>
       prevHalls.map((hall) =>
@@ -102,6 +118,10 @@ export const AdminPage = () => {
     if (selectedHallForPrice?.id === updatedHallData.id) {
       setSelectedHallForPrice(updatedHallData);
     }
+
+    if (selectedHallForOrder?.id === updatedHallData.id) {
+      setSelectedHallForOrder(updatedHallData);
+    }
   };
 
   const handleCancel = () => {
@@ -113,7 +133,7 @@ export const AdminPage = () => {
         setSelectedHallForConfig(originalHall);
       }
     }
-    
+
     if (selectedHallForPrice) {
       const originalHall = halls.find(
         (hall) => hall.id === selectedHallForPrice.id
@@ -130,9 +150,9 @@ export const AdminPage = () => {
         <div className="admin-page__header">
           <Header />
         </div>
-        
+
         <Stack className="admin-section__container">
-          <header className="admin-section__header">
+          <header className="admin-section__header admin-section__header-alone">
             <div className="admin-section__header-container">
               <div className="admin-section__header-tittle">
                 Управление залами
@@ -146,7 +166,7 @@ export const AdminPage = () => {
             </div>
           </header>
           <section
-            className={`admin-section__body ${
+            className={`admin-section__body admin-section__body-both ${
               isSectionOpen("hallManagment") ? "" : "admin-section__hidden"
             }`}
           >
@@ -165,7 +185,7 @@ export const AdminPage = () => {
             </div>
             <button
               className="admin-section__btn"
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => setIsHallModalOpen(true)}
             >
               Cоздать зал
             </button>
@@ -173,7 +193,7 @@ export const AdminPage = () => {
         </Stack>
 
         <Stack className="admin-section__container">
-          <header className="admin-section__header admin-section__header-both">
+          <header className="admin-section__header admin-section__header-alone admin-section__header-both">
             <div className="admin-section__header-container">
               <div className="admin-section__header-tittle">
                 Конфигурация залов
@@ -187,7 +207,7 @@ export const AdminPage = () => {
             </div>
           </header>
           <section
-            className={`admin-section__body ${
+            className={`admin-section__body admin-section__body-both ${
               isSectionOpen("hallConfig") ? "" : "admin-section__hidden"
             }`}
           >
@@ -218,7 +238,7 @@ export const AdminPage = () => {
         </Stack>
 
         <Stack className="admin-section__container">
-          <header className="admin-section__header admin-section__header-both">
+          <header className="admin-section__header admin-section__header-alone admin-section__header-both">
             <div className="admin-section__header-container">
               <div className="admin-section__header-tittle">
                 Конфигурация цен
@@ -232,7 +252,7 @@ export const AdminPage = () => {
             </div>
           </header>
           <section
-            className={`admin-section__body ${
+            className={`admin-section__body admin-section__body-both ${
               isSectionOpen("priceConfig") ? "" : "admin-section__hidden"
             }`}
           >
@@ -263,11 +283,9 @@ export const AdminPage = () => {
         </Stack>
 
         <Stack className="admin-section__container">
-          <header className="admin-section__header admin-section__header-both">
+          <header className="admin-section__header admin-section__header-alone admin-section__header-both">
             <div className="admin-section__header-container">
-              <div className="admin-section__header-tittle">
-                Сетка сеансов
-              </div>
+              <div className="admin-section__header-tittle">Сетка сеансов</div>
               <div
                 className={`admin-section__header-close-button ${
                   isSectionOpen("sessionGrid") ? "" : "rotated"
@@ -277,18 +295,65 @@ export const AdminPage = () => {
             </div>
           </header>
           <section
-            className={`admin-section__body ${
+            className={`admin-section__body admin-section__body-both ${
               isSectionOpen("sessionGrid") ? "" : "admin-section__hidden"
             }`}
+          ></section>
+        </Stack>
+
+        <Stack className="admin-section__container">
+          <header className="admin-section__header admin-section__header-last">
+            <div className="admin-section__header-container">
+              <div className="admin-section__header-tittle">
+                Открыть продажи
+              </div>
+              <div
+                className={`admin-section__header-close-button ${
+                  isSectionOpen("openSales") ? "" : "rotated"
+                }`}
+                onClick={() => toggleSection("openSales")}
+              ></div>
+            </div>
+          </header>
+          <section
+            className={`admin-section__body ${
+              isSectionOpen("openSales") ? "" : "admin-section__hidden"
+            }`}
           >
-          
+            <div className="mb-3">
+              Выберите зал для открытия/закрытия продаж:
+            </div>
+            <div className="admin-section__hall-config">
+              {halls.map((hall) => (
+                <div
+                  className={`admin-section__hall-item ${
+                    selectedHallForOrder?.id === hall.id
+                      ? "admin-section__hall-item-selected"
+                      : ""
+                  }`}
+                  key={hall.id}
+                  onClick={() => handleHallOrderClick(hall)}
+                >
+                  {hall.hall_name}
+                </div>
+              ))}
+            </div>
+            {selectedHallForOrder && (
+              <OpenSales hallData={selectedHallForOrder} onSave={handleSave} />
+            )}
           </section>
         </Stack>
       </Container>
-      {isModalOpen && (
+      {isHallModalOpen && (
         <CreateHallModal
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => setIsHallModalOpen(false)}
           onHallCreated={handleHallCreated}
+        />
+      )}
+      {isFilmModalOpen && (
+        <AddFilmModal
+          onClose={() => setIsFilmModalOpen(false)}
+          onFilmAdded={handleFilmAdded}
         />
       )}
     </ChangeBgImage>

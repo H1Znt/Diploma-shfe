@@ -9,7 +9,6 @@ import { Login } from "./Pages/Login";
 import { ProtectedRoute } from "./hooks/ProtectedRoute";
 import { AdminPage } from "./Pages/AdminPage";
 import { AuthProvider } from "./hooks/AuthProvider";
-import { AddMovie } from "./components/AddMovie";
 import { MovieSeance } from "./components/MovieSeance";
 import { BookingTickets } from "./components/BookingTickets";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -24,14 +23,6 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/movies/:seanceId" element={<MovieSeance />} />
           <Route path="/booking-tickets" element={<BookingTickets />} />
-          <Route
-            path="/movies/new"
-            element={
-              <ProtectedRoute>
-                <AddMovie />
-              </ProtectedRoute>
-            }
-          />
           <Route
             path="/movies/edit"
             element={
