@@ -20,24 +20,21 @@ export const AddFilmModal: React.FC<AddFilmModalProps> = ({
     poster: null as File | null,
   });
 
+  const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isNotificationVisible, setIsNotificationVisible] = useState(false);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0] || null;
-    setForm((prev) => ({ ...prev, poster: file }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log(error)
     if (isSubmitting) return;
+
+    if (!form.poster) {
+      setError("Пожалуйста, добавьте постер для фильма.");
+      return;
+    }
+
+    setError(null);
     setIsSubmitting(true);
 
     const params = new FormData();
@@ -52,7 +49,9 @@ export const AddFilmModal: React.FC<AddFilmModalProps> = ({
         method: "POST",
         body: params,
       });
+
       const data = await response.json();
+
       onFilmAdded(data.films);
       onClose();
       setIsNotificationVisible(true);
@@ -61,6 +60,35 @@ export const AddFilmModal: React.FC<AddFilmModalProps> = ({
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+    setError(null);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] || null;
+
+    if (file) {
+      if (file.type !== "image/png") {
+        setError("Пожалуйста, загрузите файл в формате PNG.");
+        e.target.value = "";
+        return;
+      }
+
+      if (file.size > 3 * 1024 * 1024) {
+        setError("Размер файла не должен превышать 3 МБ.");
+        e.target.value = "";
+        return;
+      }
+    }
+
+    setForm((prev) => ({ ...prev, poster: file }));
+    setError(null);
   };
 
   return (
@@ -122,6 +150,8 @@ export const AddFilmModal: React.FC<AddFilmModalProps> = ({
             />
           </div>
 
+          {error && <p className="mb-0" style={{ color: "red", fontWeight: "600" }}>{error}</p>}
+          
           <div className="modal__actions">
             <button
               type="submit"
@@ -138,7 +168,6 @@ export const AddFilmModal: React.FC<AddFilmModalProps> = ({
               type="file"
               className="hidden-input"
               onChange={handleFileChange}
-              required
             />
             <button
               type="button"

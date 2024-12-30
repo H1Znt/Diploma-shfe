@@ -25,8 +25,6 @@ export const Login: React.FC = () => {
   const [isLoading, setLoading] = useState(false);
   const { login, logout, transferIn } = useAuth();
 
-  // const adminEmail = "shfe-diplom@netology.ru";
-  // const adminPassword = "shfe-diplom"
   const location = useLocation();
   const navigate = useNavigate();
 
