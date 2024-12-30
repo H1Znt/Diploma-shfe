@@ -73,6 +73,7 @@ export const AdminPage = () => {
 
   const handleFilmAdded = (updatedFilms: IFilm[]) => {
     setFilms(updatedFilms);
+    console.log(films)
   };
 
   const toggleSection = (id: string) => {

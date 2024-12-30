@@ -164,11 +164,6 @@
     background-color: var(--base-color-admin-top) !important;
     border: none !important;
   }
-
-  &:focus,
-  &:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color !important;
-  }
 }
 
 .btn__secondary {
@@ -183,11 +178,6 @@
     background-color: var(--base-color-admin-top) !important;
     color: #fff !important;
     border: none !important;
-  }
-
-  &:focus,
-  &:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color !important;
   }
 }
 
@@ -204,11 +194,6 @@
   &:active {
     background-color: var(--base-color-admin-top) !important;
     border: none !important;
-  }
-
-  &:focus,
-  &:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color !important;
   }
 }
 

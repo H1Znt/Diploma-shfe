@@ -1,17 +1,3 @@
-@mixin hover {
-  @media (hover: hover) {
-    &:hover {
-      @content;
-    }
-  }
-
-  @media (hover: none) {
-    &:active {
-      @content;
-    }
-  }
-}
-
 .open-sales {
   &__tittle {
     text-align: center;
@@ -37,8 +23,8 @@
       background-color: var(--base-color-button);
       color: white;
 
-      @include hover {
-        background-color: var(--base-color-admin-top);
+      &:active {
+        background-color: var(--base-color-admin-top) !important;
         border: none !important;
       }
     }
