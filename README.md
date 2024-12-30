@@ -1,16 +1,15 @@
 # Сайт для бронирования билетов в кинотеатр, с информационной системой для администрирования залов, сеансов и предварительного бронирования билетов.
 
 ### Стэк технологий, используемых в процессе работы над проектом.
-> React, React Router, React Hooks, React-bootstrap, Bootstrap.<br>
+> React, Vite, React Router, React-DND,  React-bootstrap, Bootstrap.<br>
 > HTML, SCSS, TypeScript.<br>
-> Vite, Figma. <br>
+> Figma. <br>
   
 - [Страница на gh-pages](https://h1znt.github.io/Diploma-shfe/  "Ссылка на сайт")
   
 - [Макет страниц в Figma](https://www.figma.com/file/zGf2lm7mUBGeXWlZQyf9LH/%D0%94%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD-%D0%BC%D0%B0%D0%BA%D0%B5%D1%82-(1)?type=design&mode=design "Макет страницы в Figma")
  
 ### Описание проекта
-
 
 - сайт бронирования билетов онлайн,
 - административная часть сайта.

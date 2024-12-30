@@ -23,7 +23,7 @@ export const Main: React.FC = () => {
   useEffect(() => {
     transferOut();
     logout();
-    // Генерация дат (7 дней начиная с текущей)
+    // Генерация дат (6 дней начиная с текущей)
     const today = new Date();
     const generatedDates = Array.from({ length: 6 }, (_, i) => {
       const date = new Date();
