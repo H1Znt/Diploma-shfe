@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Notification } from "../../hooks/Notification";
 import { IFilm } from "../../models";
+import "../../styles/_createHallModal.scss";
 
 interface AddFilmModalProps {
   onClose: () => void;
@@ -63,29 +64,94 @@ export const AddFilmModal: React.FC<AddFilmModalProps> = ({
   };
 
   return (
-    <div className="modal">
-      <form onSubmit={handleSubmit}>
-        <input name="name" placeholder="Название" onChange={handleChange} />
-        <input
-          name="duration"
-          type="number"
-          placeholder="Длительность"
-          onChange={handleChange}
-        />
-        <textarea
-          name="description"
-          placeholder="Описание"
-          onChange={handleChange}
-        />
-        <input name="origin" placeholder="Страна" onChange={handleChange} />
-        <input type="file" onChange={handleFileChange} />
-        <button type="submit" disabled={isSubmitting}>
-          Добавить
-        </button>
-        <button type="button" onClick={onClose} disabled={isSubmitting}>
-          Отменить
-        </button>
-      </form>
+    <div className="modal__overlay">
+      <div className="modal__content">
+        <header className="modal__header">
+          <h2>Добавление Фильма</h2>
+          <div className="modal__close" onClick={onClose}></div>
+        </header>
+        <form onSubmit={handleSubmit} className="modal__form">
+          <div className="w-100">
+            <label htmlFor="filmName">Название фильма</label>
+            <input
+              id="filmName"
+              name="name"
+              placeholder="Название фильма"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="w-100">
+            <label htmlFor="filmTime">Продолжительность фильма (мин.)</label>
+            <input
+              id="filmTime"
+              name="duration"
+              type="number"
+              inputMode="numeric"
+              min={1}
+              placeholder="Продолжительность фильма (мин.)"
+              value={form.duration}
+              onChange={handleChange}
+              onBlur={(e) => {
+                const value = parseInt(e.target.value, 10);
+                if (isNaN(value) || value < 1) {
+                  setForm((prev) => ({ ...prev, duration: "1" }));
+                }
+              }}
+              required
+            />
+          </div>
+          <div className="w-100">
+            <label htmlFor="filTittle">Описание фильма</label>
+            <textarea
+              id="filTittle"
+              name="description"
+              placeholder="Описание фильма"
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="w-100">
+            <label htmlFor="filmCountry">Страна</label>
+            <input
+              id="filmCountry"
+              name="origin"
+              placeholder="Страна"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="modal__actions">
+            <button
+              type="submit"
+              className="btn-box btn__primary"
+              disabled={isSubmitting}
+            >
+              Добавить Фильм
+            </button>
+            <label htmlFor="filmPoster" className="btn-box btn__upload">
+              Загрузить постер
+            </label>
+            <input
+              id="filmPoster"
+              type="file"
+              className="hidden-input"
+              onChange={handleFileChange}
+              required
+            />
+            <button
+              type="button"
+              className="btn-box btn__secondary"
+              onClick={onClose}
+              disabled={isSubmitting}
+            >
+              Отменить
+            </button>
+          </div>
+        </form>
+      </div>
+
       {isNotificationVisible && (
         <Notification
           message="Данные успешно сохранены!"

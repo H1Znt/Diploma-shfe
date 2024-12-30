@@ -12,7 +12,7 @@ export const CreateHallModal: React.FC<CreateHallModalProps> = ({
   onHallCreated,
 }) => {
   const [hallName, setHallName] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,8 +32,8 @@ export const CreateHallModal: React.FC<CreateHallModalProps> = ({
       const data = await response.json();
 
       if (data.success && data.result?.halls) {
-        onHallCreated(data.result.halls); 
-        onClose(); 
+        onHallCreated(data.result.halls);
+        onClose();
       } else {
         console.error("Ошибка создания зала:", data.message);
       }
@@ -52,26 +52,28 @@ export const CreateHallModal: React.FC<CreateHallModalProps> = ({
           <div className="modal__close" onClick={onClose}></div>
         </header>
         <form onSubmit={handleSubmit} className="modal__form">
-          <label htmlFor="hallName">Название зала</label>
-          <input
-            id="hallName"
-            type="text"
-            value={hallName}
-            onChange={(e) => setHallName(e.target.value)}
-            placeholder="Название зала"
-            required
-          />
+          <div className="w-100">
+            <label htmlFor="hallName">Название зала</label>
+            <input
+              id="hallName"
+              type="text"
+              value={hallName}
+              onChange={(e) => setHallName(e.target.value)}
+              placeholder="Название зала"
+              required
+            />
+          </div>
           <div className="modal__actions">
             <button
               type="submit"
-              className="btn btn__primary"
+              className="btn-box btn__primary"
               disabled={isSubmitting}
             >
               Добавить
             </button>
             <button
               type="button"
-              className="btn btn__secondary"
+              className="btn-box btn__secondary"
               onClick={onClose}
               disabled={isSubmitting}
             >

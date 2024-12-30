@@ -144,6 +144,8 @@ export const AdminPage = () => {
     }
   };
 
+  const handleAddFilm = () => setIsFilmModalOpen(true);
+
   return (
     <ChangeBgImage>
       <Container className="admin-page__container">
@@ -298,7 +300,11 @@ export const AdminPage = () => {
             className={`admin-section__body admin-section__body-both ${
               isSectionOpen("sessionGrid") ? "" : "admin-section__hidden"
             }`}
-          ></section>
+          >
+            <button onClick={() => {setIsFilmModalOpen(true)}}>
+              AddFilm
+            </button>
+          </section>
         </Stack>
 
         <Stack className="admin-section__container">
